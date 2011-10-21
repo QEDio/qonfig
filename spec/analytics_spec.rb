@@ -5,22 +5,22 @@ describe Qonfig::Analytics do
 
   let(:analytics) do
     Qonfig::Analytics.new(
-      :user     => :test,
-      :view     => :view,
-      :database => Qonfig::Db.new(:data => DATA))
+      :user         => :user,
+      :view         => :view,
+      :datasource   => Qonfig::Db.new(:data => CONFIG_DATA))
   end
 
   it "should return the bollinger data" do
-    analytics.bollinger.should == DATA[:test][:view][:analytics][:bollinger]
+    analytics.bollinger.should == CONFIG_DATA[:user][:view][:analytics][:bollinger]
   end
 
   it "should return the bollinger row" do
     analytics.bollinger_row(:campaign_product, "Solaranlage").
-      should ==  DATA[:test][:view][:analytics][:bollinger][:rows].first
+      should ==  CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first
   end
 
   it "should return the bollinger column" do
     analytics.bollinger_column(:campaign_product, "Solaranlage", :cr).
-      should ==  DATA[:test][:view][:analytics][:bollinger][:rows].first[:columns].first
+      should ==  CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first[:columns].first
   end
 end

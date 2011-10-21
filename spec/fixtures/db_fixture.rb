@@ -1,8 +1,8 @@
 module Qonfig
   module Test
     module Db
-      DATA = {
-        :test => {
+      CONFIG_DATA = {
+        :user => {
           :view => {
             :analytics => {
               :bollinger => {

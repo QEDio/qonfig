@@ -10,15 +10,15 @@ module Qonfig
       raise Exception.new("Now user provided!") if options[:user].blank?
       raise Exception.new("Now view provided!") if options[:view].blank?
       
-      @database           = options[:database]
-      @analytics          = @database.get(  :user         => options[:user],
-                                            :view         => options[:view],
-                                            :function     => :analytics)
+      @datasource           = options[:datasource]
+      @analytics            = @datasource.get(  :user         => options[:user],
+                                                :view         => options[:view],
+                                                :function     => :analytics)
     end
 
     def default_options
       {
-        :database     => Qonfig::Db.new
+        :datasource     => Qonfig::Db.new
       }
     end
 
