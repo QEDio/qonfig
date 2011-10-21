@@ -19,6 +19,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_runtime_dependency 'activesupport'
+  # require 'active_support/core_ext/string/inflections' has a dependency to it
+  s.add_runtime_dependency('i18n')
+
+  s.add_development_dependency('turn')
+  s.add_development_dependency('rspec')
+  s.add_development_dependency('spork')
+  s.add_development_dependency('spork-testunit')
+  s.add_development_dependency('simplecov')
 end
