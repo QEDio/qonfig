@@ -45,7 +45,7 @@ module Qonfig
 
       if( br && br[:columns] )
         br[:columns].each do |column|
-          if( column_value.nil? )
+          if( column_value.nil? || column[:value].nil? )
             ret_val = column if column[:key].eql?(column_key)
           else
             ret_val = column if( column[:key].eql?(column_key) && column[:value].eql?(column_value))
