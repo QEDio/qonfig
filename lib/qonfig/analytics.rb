@@ -31,10 +31,8 @@ module Qonfig
 
       # we need to compare with value as well
       # if it doesn't match, return nil
-      if( row && value && !row["value"].nil? )
-        if( !value.eql?(row["value"]))
-          row = nil
-        end
+      if( row )
+        row = row[value]
       end
       
       return row

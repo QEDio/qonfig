@@ -16,7 +16,7 @@ describe Qonfig::Analytics do
 
   it "should return the bollinger row" do
     analytics.bollinger_row("campaign_product", "Solaranlage").
-      should ==  CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]
+      should ==  CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["Solaranlage"]
   end
 
   it "should return nil for this row" do
@@ -26,7 +26,7 @@ describe Qonfig::Analytics do
   it "should return the bollinger column merged with the default config" do
     analytics.bollinger_column("campaign_product", "Solaranlage", "cr").
       should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["defaults"]["columns"]["cr"].
-                  merge(CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["columns"]["cr"])
+                  merge(CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["Solaranlage"]["columns"]["cr"])
   end
 
   it "should return nil for this column" do
@@ -44,6 +44,6 @@ describe Qonfig::Analytics do
 
   it "should return the column config without the default config" do
     analytics.bollinger_column("campaign_product", "Solaranlage", "cr", :merge_with_defaults => false).
-      should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["columns"]["cr"]
+      should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["Solaranlage"]["columns"]["cr"]
   end
 end
