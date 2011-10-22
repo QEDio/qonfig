@@ -57,15 +57,20 @@ module Qonfig
     end
 
     def bollinger_defaults(type, key, value = nil)
+      ret_val   = nil
       defaults = bollinger[:defaults][type]
 
-      defaults.each do |default|
-        if(value)
-          return default if( default[:key].eql?(key) && default[:value].eql?(value))
-        else
-          return default if( default[:Key].eql?(key) )
+      if defaults && defaults.is_a?(Array)
+        defaults.each do |default|
+          if(value && !default[:value].nil?)
+            ret_val = default if( default[:key].eql?(key) && default[:value].eql?(value))
+          else
+            ret_val = default if( default[:key].eql?(key) )
+          end
         end
       end
+
+      return ret_val
     end
   end
 end

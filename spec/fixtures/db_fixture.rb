@@ -2,8 +2,8 @@ module Qonfig
   module Test
     module Db
       CONFIG_DATA = {
-        :kp => {
-          :early_warning => {
+        :user => {
+          :view => {
             :analytics => {
               :bollinger => {
                 :rows  => [
@@ -19,7 +19,6 @@ module Qonfig
                     ]
                   }
                 ],
-
                 :defaults => {
                   :columns => [
                     {

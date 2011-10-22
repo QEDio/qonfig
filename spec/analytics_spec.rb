@@ -23,4 +23,9 @@ describe Qonfig::Analytics do
     analytics.bollinger_column(:campaign_product, "Solaranlage", :cr).
       should ==  CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first[:columns].first
   end
+
+  it "should return the default bollinger column" do
+    analytics.bollinger_defaults(:columns, :cr).
+      should == CONFIG_DATA[:user][:view][:analytics][:bollinger][:defaults][:columns].first
+  end
 end
