@@ -39,21 +39,34 @@ module Qonfig
       return ret_val
     end
 
-    def bollinger_column(row_key, row_value, column_key, column_value = nil)
+    def bollinger_column(row_key, row_value, column_key, ext_options = {})
+      options   = default_bollinger_column_options.merge(ext_options)
       br        = bollinger_row(row_key, row_value)
       ret_val   = nil
 
       if( br && br[:columns] )
         br[:columns].each do |column|
-          if( column_value.nil? || column[:value].nil? )
+          if( options[:column_value].nil? || column[:value].nil? )
             ret_val = column if column[:key].eql?(column_key)
           else
-            ret_val = column if( column[:key].eql?(column_key) && column[:value].eql?(column_value))
+            if( column[:key].eql?(column_key) && column[:value].eql?(options[:column_value]))
+              ret_val = column
+            end
           end
         end
       end
 
+      if( options[:merge_with_defaults] )
+        ret_val = (bollinger_defaults(:columns, column_key, options[:column_value]) || {}).merge(ret_val)
+      end
       return ret_val
+    end
+
+    def default_bollinger_column_options
+      {
+        :column_value         => nil,
+        :merge_with_defaults  => true
+      }
     end
 
     def bollinger_defaults(type, key, value = nil)
