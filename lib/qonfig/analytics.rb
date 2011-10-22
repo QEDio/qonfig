@@ -13,7 +13,7 @@ module Qonfig
       @datasource           = options[:datasource]
       @analytics            = @datasource.get(  :user         => options[:user],
                                                 :view         => options[:view],
-                                                :function     => :analytics)
+                                                :function     => "analytics")
     end
 
     def default_options
@@ -23,45 +23,45 @@ module Qonfig
     end
 
     def bollinger
-      @analytics[:bollinger]
+      @analytics["bollinger"]
     end
 
     def bollinger_row(key, value)
-      ret_val = nil
+      row = bollinger["rows"][key]
 
-      bollinger[:rows].each do |row|
-        if( row[:key].eql?(key) && row[:value].eql?(value) )
-          ret_val = row
-          break
+      # we need to compare with value as well
+      # if it doesn't match, return nil
+      if( row && value && !row["value"].nil? )
+        if( !value.eql?(row["value"]))
+          row = nil
         end
       end
-
-      return ret_val
+      
+      return row
     end
 
     def bollinger_column(row_key, row_value, column_key, ext_options = {})
       options   = default_bollinger_column_options.merge(ext_options)
-      br        = bollinger_row(row_key, row_value)
-      ret_val   = nil
+      row       = bollinger_row(row_key, row_value)
+      column    = nil
+      value     = options[:column_value]
 
-      if( br && br[:columns] )
-        br[:columns].each do |column|
-          if( options[:column_value].nil? || column[:value].nil? )
-            ret_val = column if column[:key].eql?(column_key)
-          else
-            if( column[:key].eql?(column_key) && column[:value].eql?(options[:column_value]))
-              ret_val = column
-            end
+      if( row && row["columns"] )
+        column = row["columns"][column_key]
+        if( column && value && !column["value"].nil? )
+          if( !value.eql?(column["value"]) )
+            column = nil
           end
         end
       end
 
-      if( ret_val )
+      if( column )
         if( options[:merge_with_defaults] )
-          ret_val = (bollinger_defaults(:columns, column_key, options[:column_value]) || {}).merge(ret_val)
+          column = (bollinger_defaults("columns", column_key, options[:column_value]) || {}).merge(column)
         end
       end
-      return ret_val
+
+      return column
     end
 
     def default_bollinger_column_options
@@ -72,20 +72,20 @@ module Qonfig
     end
 
     def bollinger_defaults(type, key, value = nil)
-      ret_val   = nil
-      defaults = bollinger[:defaults][type]
+      default   = nil
+      defaults = bollinger["defaults"][type]
 
-      if defaults && defaults.is_a?(Array)
-        defaults.each do |default|
-          if(value && !default[:value].nil?)
-            ret_val = default if( default[:key].eql?(key) && default[:value].eql?(value))
-          else
-            ret_val = default if( default[:key].eql?(key) )
+      if defaults
+        default = defaults[key]
+
+        if( default && value && !default["value"].nil? )
+          if( !value.eql?(default["value"]))
+            default = nil
           end
         end
       end
 
-      return ret_val
+      return default
     end
   end
 end

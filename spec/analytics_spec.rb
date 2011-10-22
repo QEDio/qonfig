@@ -5,45 +5,45 @@ describe Qonfig::Analytics do
 
   let(:analytics) do
     Qonfig::Analytics.new(
-      :user         => :user,
-      :view         => :view,
+      :user         => "user",
+      :view         => "view",
       :datasource   => Qonfig::Db.new(:data => CONFIG_DATA))
   end
 
   it "should return the bollinger data" do
-    analytics.bollinger.should == CONFIG_DATA[:user][:view][:analytics][:bollinger]
+    analytics.bollinger.should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]
   end
 
   it "should return the bollinger row" do
-    analytics.bollinger_row(:campaign_product, "Solaranlage").
-      should ==  CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first
+    analytics.bollinger_row("campaign_product", "Solaranlage").
+      should ==  CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]
   end
 
   it "should return nil for this row" do
-    analytics.bollinger_row(:campaign_product, "XYZ").should == nil
+    analytics.bollinger_row("campaign_product", "XYZ").should == nil
   end
 
   it "should return the bollinger column merged with the default config" do
-    analytics.bollinger_column(:campaign_product, "Solaranlage", :cr).
-      should == CONFIG_DATA[:user][:view][:analytics][:bollinger][:defaults][:columns].first.
-                  merge(CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first[:columns].first)
+    analytics.bollinger_column("campaign_product", "Solaranlage", "cr").
+      should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["defaults"]["columns"]["cr"].
+                  merge(CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["columns"]["cr"])
   end
 
   it "should return nil for this column" do
-    analytics.bollinger_column(:campaign_product, "ZYX", :cr).should == nil
+    analytics.bollinger_column("campaign_product", "ZYX", "cr").should == nil
   end
 
   it "should return the default bollinger column" do
-    analytics.bollinger_defaults(:columns, :cr).
-      should == CONFIG_DATA[:user][:view][:analytics][:bollinger][:defaults][:columns].first
+    analytics.bollinger_defaults("columns", "cr").
+      should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["defaults"]["columns"]["cr"]
   end
 
   it "should return nil for this default" do
-    analytics.bollinger_defaults(:columns, :xyz).should == nil
+    analytics.bollinger_defaults("columns", "xyz").should == nil
   end
 
   it "should return the column config without the default config" do
-    analytics.bollinger_column(:campaign_product, "Solaranlage", :cr, :merge_with_defaults => false).
-      should == CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first[:columns].first
+    analytics.bollinger_column("campaign_product", "Solaranlage", "cr", :merge_with_defaults => false).
+      should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["columns"]["cr"]
   end
 end

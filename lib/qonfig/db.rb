@@ -9,7 +9,7 @@ module Qonfig
     def get(ext_options = {})
       options = default_get_options.merge(ext_options)
 
-      raise Exception.new("Now user provided!") if options[:user].blank?
+      raise Exception.new("No user provided!") if options[:user].blank?
       conf = data[options[:user]]
 
       if( conf && options[:view] )
@@ -37,33 +37,29 @@ module Qonfig
     
     def self.data
       {
-        :kp => {
-          :early_warning => {
-            :analytics => {
-              :bollinger => {
-                :rows  => [
-                  {
-                    :key => :campaign_product,
-                    :value => "Solaranlage",
-                    :columns => [
-                      {
-                        :key =>       :cr,
-                        :factor       => 5,
-                        :nr_values    => 5
+        "kp" => {
+          "early_warning" => {
+            "analytics" => {
+              "bollinger" => {
+                "rows"  => {
+                  "campaign_product" => {
+                    "value" => "Solaranlage",
+                    "columns" => {
+                      "cr" => {
+                        "factor"       => 5,
+                        "nr_values"    => 5
                       }
-                    ]
-                  }
-                ],
-
-                :defaults => {
-                  :columns => [
-                    {
-                      :key          => :cr,
-                      :factor       => 1,
-                      :nr_values    => 10,
-                      :data_points  => :weekly
                     }
-                  ]
+                  }
+                },
+                "defaults" => {
+                  "columns" => {
+                    "cr" => {
+                      "factor"       => 1,
+                      "nr_values"    => 10,
+                      "data_points"  => "weekly"
+                    }
+                  }
                 }
               }
             }
