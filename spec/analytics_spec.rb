@@ -19,15 +19,27 @@ describe Qonfig::Analytics do
       should ==  CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first
   end
 
+  it "should return nil for this row" do
+    analytics.bollinger_row(:campaign_product, "XYZ").should == nil
+  end
+
   it "should return the bollinger column merged with the default config" do
     analytics.bollinger_column(:campaign_product, "Solaranlage", :cr).
       should == CONFIG_DATA[:user][:view][:analytics][:bollinger][:defaults][:columns].first.
                   merge(CONFIG_DATA[:user][:view][:analytics][:bollinger][:rows].first[:columns].first)
   end
 
+  it "should return nil for this column" do
+    analytics.bollinger_column(:campaign_product, "ZYX", :cr).should == nil
+  end
+
   it "should return the default bollinger column" do
     analytics.bollinger_defaults(:columns, :cr).
       should == CONFIG_DATA[:user][:view][:analytics][:bollinger][:defaults][:columns].first
+  end
+
+  it "should return nil for this default" do
+    analytics.bollinger_defaults(:columns, :xyz).should == nil
   end
 
   it "should return the column config without the default config" do

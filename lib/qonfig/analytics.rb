@@ -56,8 +56,10 @@ module Qonfig
         end
       end
 
-      if( options[:merge_with_defaults] )
-        ret_val = (bollinger_defaults(:columns, column_key, options[:column_value]) || {}).merge(ret_val)
+      if( ret_val )
+        if( options[:merge_with_defaults] )
+          ret_val = (bollinger_defaults(:columns, column_key, options[:column_value]) || {}).merge(ret_val)
+        end
       end
       return ret_val
     end
