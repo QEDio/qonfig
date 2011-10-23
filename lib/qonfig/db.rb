@@ -43,7 +43,7 @@ module Qonfig
               "bollinger" => {
                 "rows"  => {
                   "campaign_product" => {
-                    "Solaranlage" => {
+                    "solaranlagen" => {
                       "columns" => {
                         "cr" => {
                           "factor"       => 5,
