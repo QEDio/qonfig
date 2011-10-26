@@ -27,12 +27,12 @@ module Qonfig
     end
 
     def bollinger_row(key, value)
-      row = bollinger["rows"][key]
+      row = bollinger["rows"][key] || {}
 
       # we need to compare with value as well
       # if it doesn't match, return nil
       if( row )
-        row = row[value]
+        row = row[value] || {}
       end
       
       return row
@@ -41,22 +41,21 @@ module Qonfig
     def bollinger_column(row_key, row_value, column_key, ext_options = {})
       options   = default_bollinger_column_options.merge(ext_options)
       row       = bollinger_row(row_key, row_value)
-      column    = nil
+      column    = options[:default_return_value]
       value     = options[:column_value]
 
-      if( row && row["columns"] )
-        column = row["columns"][column_key]
-        if( column && value && !column["value"].nil? )
+      if( row.present? && row["columns"] )
+        column = row["columns"][column_key] || options[:default_return_value]
+
+        if( column.present? && value && !column["value"].nil? )
           if( !value.eql?(column["value"]) )
-            column = nil
+            column = options[:default_return_value]
           end
         end
       end
 
-      if( column )
-        if( options[:merge_with_defaults] )
-          column = (bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}).merge(column)
-        end
+      if( options[:merge_with_defaults] )
+        column = (bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}).merge(column)
       end
 
       return column
@@ -65,26 +64,27 @@ module Qonfig
     def default_bollinger_column_options
       {
         :column_value         => nil,
-        :merge_with_defaults  => true
+        :merge_with_defaults  => true,
+        :default_return_value => {}
       }
     end
 
     def bollinger_defaults(ext_options = {})
       options   = default_bollinger_defaults_options.merge(ext_options)
 
-      default   = bollinger["defaults"]
+      default   = bollinger["defaults"] || options[:default_return_value]
 
-      if( default && options[:type] )
-        default = default[options[:type]]
+      if( default.present? && options[:type] )
+        default = default[options[:type]] || options[:default_return_value]
       end
 
-      if( default && options[:key] )
-        default = default[options[:key]]
+      if( default.present? && options[:key] )
+        default = default[options[:key]] || options[:default_return_value]
       end
 
-      if( default && options[:value] && !default["value"].nil? )
+      if( default.present? && options[:value] && !default["value"].nil? )
         if( !options[:value].eql?(default["value"]))
-          default = nil
+          default = options[:default_return_value]
         end
       end
 
@@ -93,9 +93,10 @@ module Qonfig
 
     def default_bollinger_defaults_options
       {
-        :type   => nil,
-        :key    => nil,
-        :value  => nil
+        :type                 => nil,
+        :key                  => nil,
+        :value                => nil,
+        :default_return_value => {}
       }
     end
 
@@ -106,16 +107,23 @@ module Qonfig
       options = default_set_bollinger_defaults_options.merge(ext_options)
       default = bollinger_defaults(:type => type, :key => key, :value => options[:value])
 
-      if( default )
+      if( default.blank? )
+        default = bollinger_defaults(:type => type)
+        hsh = {}
+        
+        self.class.bollinger_params.each do |param|
+          if( options[param] )
+            hsh[param] = options[param]
+          end
+        end
+
+        default[key] = hsh
+      else
         self.class.bollinger_params.each do |param|
           if( options[param] )
             default[param] = options[param]
           end
         end
-      else
-        default = bollinger_defaults(:type => type)
-        default[key] = {}
-        set_bollinger_default(type, key, ext_options)
       end
     end
 
