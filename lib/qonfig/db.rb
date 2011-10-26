@@ -42,16 +42,16 @@ module Qonfig
             "analytics" => {
               "bollinger" => {
                 "rows"  => {
-                  "campaign_product" => {
-                    "solaranlagen" => {
-                      "columns" => {
-                        "cr" => {
-                          "factor"       => 1.3,
-                          "nr_values"    => 10
-                        }
-                      }
-                    }
-                  }
+                  #"campaign_product" => {
+                  #  "solaranlagen" => {
+                  #    "columns" => {
+                  #      "cr" => {
+                  #        "factor"       => 1.3,
+                  #        "nr_values"    => 10
+                  #      }
+                  #    }
+                  #  }
+                  #}
                 },
                 "defaults" => {
                   "columns" => {
