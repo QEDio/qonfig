@@ -7,8 +7,8 @@ module Qonfig
     def initialize(ext_options = {})
       options             = default_options.merge(ext_options)
 
-      raise Exception.new("Now user provided!") if options[:user].blank?
-      raise Exception.new("Now view provided!") if options[:view].blank?
+      raise Exception.new("No user provided!") if options[:user].blank?
+      raise Exception.new("No view provided!") if options[:view].blank?
       
       @datasource           = options[:datasource]
       @analytics            = @datasource.get(  :user         => options[:user],
