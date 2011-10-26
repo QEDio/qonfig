@@ -55,7 +55,7 @@ module Qonfig
 
       if( column )
         if( options[:merge_with_defaults] )
-          column = (bollinger_defaults("columns", column_key, options[:column_value]) || {}).merge(column)
+          column = (bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}).merge(column)
         end
       end
 
@@ -69,21 +69,64 @@ module Qonfig
       }
     end
 
-    def bollinger_defaults(type, key, value = nil)
-      default   = nil
-      defaults = bollinger["defaults"][type]
+    def bollinger_defaults(ext_options = {})
+      options   = default_bollinger_defaults_options.merge(ext_options)
 
-      if defaults
-        default = defaults[key]
+      default   = bollinger["defaults"]
 
-        if( default && value && !default["value"].nil? )
-          if( !value.eql?(default["value"]))
-            default = nil
-          end
+      if( default && options[:type] )
+        default = default[options[:type]]
+      end
+
+      if( default && options[:key] )
+        default = default[options[:key]]
+      end
+
+      if( default && options[:value] && !default["value"].nil? )
+        if( !options[:value].eql?(default["value"]))
+          default = nil
         end
       end
 
       return default
+    end
+
+    def default_bollinger_defaults_options
+      {
+        :type   => nil,
+        :key    => nil,
+        :value  => nil
+      }
+    end
+
+    def set_bollinger_default(type, key, ext_options = {})
+      raise Exception.new("type is not allowed to be nil") if type.nil?
+      raise Exception.new("key is not allowed to be nil") if key.nil?
+
+      options = default_set_bollinger_defaults_options.merge(ext_options)
+      default = bollinger_defaults(:type => type, :key => key, :value => options[:value])
+
+      if( default )
+        self.class.bollinger_params.each do |param|
+          if( options[param] )
+            default[param] = options[param]
+          end
+        end
+      else
+        default = bollinger_defaults(:type => type)
+        default[key] = {}
+        set_bollinger_default(type, key, ext_options)
+      end
+    end
+
+    def default_set_bollinger_defaults_options
+      {
+        :value => nil,
+      }
+    end
+
+    def self.bollinger_params
+      ["factor", "nr_values", "data_points"]
     end
   end
 end

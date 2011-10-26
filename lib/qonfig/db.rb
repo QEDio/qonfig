@@ -46,8 +46,8 @@ module Qonfig
                     "solaranlagen" => {
                       "columns" => {
                         "cr" => {
-                          "factor"       => 5,
-                          "nr_values"    => 5
+                          "factor"       => 1.3,
+                          "nr_values"    => 10
                         }
                       }
                     }
@@ -55,10 +55,33 @@ module Qonfig
                 },
                 "defaults" => {
                   "columns" => {
-                    "cr" => {
+                    "clicks" => {
                       "factor"       => 1,
                       "nr_values"    => 10,
                       "data_points"  => "weekly"
+                    },
+                    "cpa" => {
+                      "factor"       => 1,
+                      "nr_values"    => 10,
+                    },
+                    "impressions" => {
+                      "factor"       => 1,
+                      "nr_values"    => 10,
+                      "data_points"  => "weekly"
+                    },
+                    "cost" => {
+                      "factor"       => 1,
+                      "nr_values"    => 10,
+                      "data_points"  => "weekly"
+                    },
+                    "conversions" => {
+                      "factor"       => 1,
+                      "nr_values"    => 10,
+                      "data_points"  => "weekly"
+                    },
+                    "cr" => {
+                      "factor"       => 1,
+                      "nr_values"    => 10,
                     }
                   }
                 }

@@ -34,16 +34,31 @@ describe Qonfig::Analytics do
   end
 
   it "should return the default bollinger column" do
-    analytics.bollinger_defaults("columns", "cr").
+    analytics.bollinger_defaults(:type => "columns", :key => "cr").
       should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["defaults"]["columns"]["cr"]
   end
 
   it "should return nil for this default" do
-    analytics.bollinger_defaults("columns", "xyz").should == nil
+    analytics.bollinger_defaults(:type => "columns", :key => "xyz").should == nil
   end
 
   it "should return the column config without the default config" do
     analytics.bollinger_column("campaign_product", "Solaranlage", "cr", :merge_with_defaults => false).
       should == CONFIG_DATA["user"]["view"]["analytics"]["bollinger"]["rows"]["campaign_product"]["Solaranlage"]["columns"]["cr"]
+  end
+
+  it "should set the default value for all known bollinger params" do
+    i = 0
+
+    ["cr", "conversion"].each do |col|
+      Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
+        analytics.set_bollinger_default("columns", col, {param => i+j})
+      end
+
+      Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
+        analytics.bollinger_defaults(:type => "columns", :key => col)[param].should == i + j
+      end
+      i += 100
+    end
   end
 end
