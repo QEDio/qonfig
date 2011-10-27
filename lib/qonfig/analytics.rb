@@ -3,6 +3,7 @@ require 'active_support/core_ext/object/blank'
 
 module Qonfig
   class Analytics
+    attr_accessor :analytics
 
     def initialize(ext_options = {})
       options             = default_options.merge(ext_options)
