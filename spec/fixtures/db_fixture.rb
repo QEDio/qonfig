@@ -11,8 +11,10 @@ module Qonfig
                     "Solaranlage" => {
                       "columns" => {
                         "cr" => {
-                          "factor"       => 5,
-                          "nr_values"    => 5
+                          "alert" => {
+                            "factor"       => 5,
+                            "nr_values"    => 5
+                          }
                         }
                       }
                     }
@@ -21,9 +23,16 @@ module Qonfig
                 "defaults" => {
                   "columns" => {
                     "cr" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
-                      "data_points"  => "weekly"
+                      "alert" => {
+                        "factor"       => 1,
+                        "nr_values"    => 10,
+                        "data_points"  => "weekly"
+                      },
+                      "warn" => {
+                        "factor"       => 1,
+                        "nr_values"    => 10,
+                        "data_points"  => "weekly"
+                      }
                     }
                   }
                 }

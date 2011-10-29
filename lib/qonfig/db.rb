@@ -41,13 +41,18 @@ module Qonfig
           "early_warning" => {
             "analytics" => {
               "bollinger" => {
+                "order" => {
+                  "alert" => 1
+                },
                 "rows"  => {
                   "campaign_product" => {
                     "solaranlagen" => {
                       "columns" => {
                         "cr" => {
-                          "factor"       => 1,
-                          "nr_values"    => 10
+                          "alert" => {
+                            "factor"       => 1,
+                            "nr_values"    => 10
+                          }
                         }
                       }
                     }
@@ -56,28 +61,64 @@ module Qonfig
                 "defaults" => {
                   "columns" => {
                     "clicks" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
+                      "alert" => {
+                        "factor"       => 3,
+                        "nr_values"    => 10
+                      },
+                      "warn" => {
+                        "factor"       => 2,
+                        "nr_values"    => 10
+                      }
                     },
                     "cpa" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
+                      "alert" => {
+                        "factor"       => 3,
+                        "nr_values"    => 10
+                      },
+                      "warn" => {
+                        "factor"       => 2,
+                        "nr_values"    => 10
+                      }
                     },
                     "impressions" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
+                      "alert" => {
+                        "factor"       => 3,
+                        "nr_values"    => 10
+                      },
+                      "warn" => {
+                        "factor"       => 2,
+                        "nr_values"    => 10
+                      }
                     },
                     "cost" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
+                      "alert" => {
+                        "factor"       => 3,
+                        "nr_values"    => 10
+                      },
+                      "warn" => {
+                        "factor"       => 2,
+                        "nr_values"    => 10
+                      }
                     },
                     "conversions" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
+                      "alert" => {
+                        "factor"       => 3,
+                        "nr_values"    => 10
+                      },
+                      "warn" => {
+                        "factor"       => 2,
+                        "nr_values"    => 10
+                      }
                     },
                     "cr" => {
-                      "factor"       => 1,
-                      "nr_values"    => 10,
+                      "alert" => {
+                        "factor"       => 3,
+                        "nr_values"    => 10
+                      },
+                      "warn" => {
+                        "factor"       => 2,
+                        "nr_values"    => 10
+                      }
                     }
                   }
                 }
