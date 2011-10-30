@@ -42,7 +42,8 @@ module Qonfig
             "analytics" => {
               "bollinger" => {
                 "order" => {
-                  "alert" => 1
+                  "alert" => 1,
+                  "warn" => 2
                 },
                 "rows"  => {
                   "campaign_product" => {
