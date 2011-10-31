@@ -45,7 +45,18 @@ module Qonfig
       column = get_bollinger_column(row_key, row_value, column_key, options)
 
       if( merge_with_defaults )
-        column = (bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}).merge(column)
+        default = bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}
+
+        if default.present?
+          # takes care of everything not in column
+          column = default.merge(column)
+
+          column.each_pair do |k,v|
+            if( default.key?(k) )
+              column[k] = default[k].merge(column[k])
+            end
+          end
+        end
       end
 
       return column
