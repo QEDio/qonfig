@@ -52,14 +52,25 @@ describe Qonfig::Analytics do
     i = 0
 
     ["cr", "conversion"].each do |col|
-      Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
-        analytics.set_bollinger_default("columns", col, {param => i+j})
+      analytics.bollinger["order"].each_pair do |band, index|
+        Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
+          analytics.set_bollinger_default("columns", col, {band => {param => i+j}})
+        end
       end
 
       Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
-        analytics.bollinger_defaults(:type => "columns", :key => col)[param].should == i + j
+        analytics.bollinger["order"].each_pair do |band, order|
+          analytics.bollinger_defaults(:type => "columns", :key => col)[band][param].should == i + j
+        end
       end
       i += 100
     end
+  end
+
+  it "should set factor to the value" do
+    puts "orig: #{analytics.bollinger_column("campaign_product", "Solaranlage", "cr")}"
+    analytics.set_bollinger_column("campaign_product", "Solaranlage", "cr", {"alert" => {"factor" => 999, "nr_values" => -1}})
+
+    puts analytics.bollinger_column("campaign_product", "Solaranlage", "cr")
   end
 end

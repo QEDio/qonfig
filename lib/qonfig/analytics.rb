@@ -40,7 +40,26 @@ module Qonfig
     end
 
     def bollinger_column(row_key, row_value, column_key, ext_options = {})
-      options   = default_bollinger_column_options.merge(ext_options)
+      options               = default_bollinger_column_options.merge(ext_options)
+      merge_with_defaults   = options.delete(:merge_with_defaults)
+      column = get_bollinger_column(row_key, row_value, column_key, options)
+
+      if( merge_with_defaults )
+        column = (bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}).merge(column)
+      end
+
+      return column
+    end
+
+    def default_bollinger_column_options
+      {
+        :merge_with_defaults  => true
+      }
+    end
+
+    def get_bollinger_column(row_key, row_value, column_key, ext_options = {})
+      options   = default_get_bollinger_column_options.merge(ext_options)
+
       row       = bollinger_row(row_key, row_value)
       column    = options[:default_return_value]
       value     = options[:column_value]
@@ -55,18 +74,31 @@ module Qonfig
         end
       end
 
-      if( options[:merge_with_defaults] )
-        column = (bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value]) || {}).merge(column)
-      end
-
       return column
     end
 
-    def default_bollinger_column_options
+    def default_get_bollinger_column_options
       {
         :column_value         => nil,
-        :merge_with_defaults  => true,
         :default_return_value => {}
+      }
+    end
+
+    def set_bollinger_column(row_key, row_value, column_key, data, ext_options = {})
+      options   = default_set_bollinger_column_options.merge(ext_options)
+      default   = bollinger_defaults(:type => "columns", :key => column_key, :value => options[:column_value])
+
+      data = self.class.remove_defaults(data, default)
+      column = get_bollinger_column(row_key, row_value, column_key, options)
+
+      column.replace(data)
+      puts "column: #{column.inspect}"
+
+    end
+
+    def default_set_bollinger_column_options
+      {
+      
       }
     end
 
@@ -106,23 +138,32 @@ module Qonfig
       raise Exception.new("key is not allowed to be nil") if key.nil?
 
       options = default_set_bollinger_defaults_options.merge(ext_options)
-      default = bollinger_defaults(:type => type, :key => key, :value => options[:value])
+      default = bollinger_defaults(:type => type, :key => key, :value => options.delete(:value))
 
       if( default.blank? )
         default = bollinger_defaults(:type => type)
         hsh = {}
-        
-        self.class.bollinger_params.each do |param|
-          if( options[param] )
-            hsh[param] = options[param]
+
+        options.each_pair do |band, conf|
+          int_hsh = {}
+
+          self.class.bollinger_params.each do |param|
+            if( conf[param] )
+              int_hsh[param] = conf[param]
+            end
           end
+
+          hsh[band] = int_hsh
         end
 
         default[key] = hsh
       else
         self.class.bollinger_params.each do |param|
-          if( options[param] )
-            default[param] = options[param]
+          options.each_pair do |band, params|
+            if( params[param] )
+              default[band] ||= {}
+              default[band][param] = params[param]
+            end
           end
         end
       end
@@ -136,6 +177,18 @@ module Qonfig
 
     def self.bollinger_params
       ["factor", "nr_values", "data_points"]
+    end
+
+    def self.remove_defaults(column_config, column_defaults)
+      column_defaults.each_pair do |id, def_conf|
+        conf = column_config[id]
+
+        if( conf )
+          conf.select!{ |var, val| !def_conf[var].eql?(val) }
+        end
+      end
+
+      return column_config.select{ |k,v| v.present? }
     end
   end
 end
