@@ -69,7 +69,7 @@ describe Qonfig::Analytics do
 
   it "should set factor to the value" do
     puts "orig: #{analytics.bollinger_column("campaign_product", "Solaranlage", "cr")}"
-    analytics.set_bollinger_column("campaign_product", "Solaranlage", "cr", {"alert" => {"factor" => 999, "nr_values" => -1}})
+    analytics.set_bollinger_column("campaign_product", "Solaranlage", "cr", {"alert"=>{"factor"=>99, "nr_values"=>9}, "warn"=>{"factor"=>11, "nr_values"=>17}})
 
     puts analytics.bollinger_column("campaign_product", "Solaranlage", "cr")
   end
