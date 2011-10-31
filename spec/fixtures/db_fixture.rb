@@ -37,6 +37,18 @@ module Qonfig
                         "nr_values"    => 10,
                         "data_points"  => "weekly"
                       }
+                    },
+                    "conversions" => {
+                      "alert" => {
+                        "factor"       => 1,
+                        "nr_values"    => 10,
+                        "data_points"  => "weekly"
+                      },
+                      "warn" => {
+                        "factor"       => 1,
+                        "nr_values"    => 10,
+                        "data_points"  => "weekly"
+                      }
                     }
                   }
                 }

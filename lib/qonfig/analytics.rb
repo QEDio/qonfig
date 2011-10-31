@@ -91,9 +91,13 @@ module Qonfig
       data = self.class.remove_defaults(data, default)
       column = get_bollinger_column(row_key, row_value, column_key, options)
 
-      column.replace(data)
-      puts "column: #{column.inspect}"
-
+      if( column.present? )
+        column.replace(data)
+      else
+        row = bollinger_row(row_key, row_value)
+        row["columns"] ||= {}
+        row["columns"][column_key ] ||= {}.merge(data)
+      end
     end
 
     def default_set_bollinger_column_options
