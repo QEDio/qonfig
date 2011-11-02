@@ -1,8 +1,6 @@
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/object/blank'
 
-require 'qonfig/analytics/functions'
-
 module Qonfig
   class Analytic
     attr_accessor :analytics

@@ -3,12 +3,14 @@ module Qonfig
     module Functions
       class Base
         attr_reader       :type
-        attr_accessor     :color, :periodicity, :name
+        attr_accessor     :id, :color, :periodicity, :name
 
         def initialize( ext_params = {} )
           params = default_params.merge(ext_params)
 
           raise Exception.new("Need a type") if params[:type].nil?
+
+          @id           = params[:id]
           @type         = params[:type]
           @color        = params[:color]
           @periodicity  = params[:periodicity]
@@ -25,6 +27,7 @@ module Qonfig
 
         def serializable_hash
           {
+            :id           => id,
             :type         => type,
             :color        => color,
             :periodicity  => periodicity,

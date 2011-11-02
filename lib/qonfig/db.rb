@@ -34,12 +34,18 @@ module Qonfig
 
       }
     end
+
+    {
+
+    }
     
     def self.data
       {
         "kp" => {
           "early_warning" => {
             "analytics" => {
+                
+
               "rows"  => {
 
                 "campaign_product" => {
