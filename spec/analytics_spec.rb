@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Qonfig::Analytics do
+describe Qonfig::Analytic do
   include Qonfig::Test::Db
 
   let(:analytics) do
-    Qonfig::Analytics.new(
+    Qonfig::Analytic.new(
       :user         => "user",
       :view         => "view",
       :datasource   => Qonfig::Db.new(:data => CONFIG_DATA))
@@ -54,12 +54,12 @@ describe Qonfig::Analytics do
 
     ["cr", "conversion"].each do |col|
       analytics.bollinger["order"].each_pair do |band, index|
-        Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
+        Qonfig::Analytic.bollinger_params.each_with_index do |param, j|
           analytics.set_bollinger_default("columns", col, {band => {param => i+j}})
         end
       end
 
-      Qonfig::Analytics.bollinger_params.each_with_index do |param, j|
+      Qonfig::Analytic.bollinger_params.each_with_index do |param, j|
         analytics.bollinger["order"].each_pair do |band, order|
           analytics.bollinger_defaults(:type => "columns", :key => col)[band][param].should == i + j
         end

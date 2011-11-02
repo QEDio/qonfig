@@ -1,8 +1,10 @@
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/object/blank'
 
+require 'qonfig/analytics/functions'
+
 module Qonfig
-  class Analytics
+  class Analytic
     attr_accessor :analytics
 
     def initialize(ext_options = {})
@@ -14,7 +16,7 @@ module Qonfig
       @datasource           = options[:datasource]
       @analytics            = @datasource.get(  :user         => options[:user],
                                                 :view         => options[:view],
-                                                :function     => "analytics")
+                                                :functions     => "analytics")
     end
 
     def default_options

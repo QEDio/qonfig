@@ -15,8 +15,8 @@ module Qonfig
       if( conf && options[:view] )
         conf = conf[options[:view]]
 
-        if( conf && options[:function] )
-          conf = conf[options[:function]]
+        if( conf && options[:functions] )
+          conf = conf[options[:functions]]
         end
       end
 
@@ -40,94 +40,88 @@ module Qonfig
         "kp" => {
           "early_warning" => {
             "analytics" => {
-              "bollinger" => {
-                "order" => {
-                  "alert" => 1,
-                  "warn" => 2
-                },
-                "rows"  => {
-                  "campaign_product" => {
-                    "solaranlagen" => {
-                      "columns" => {
-                        "cr" => {
-                          "functions" => {
-                            "order" => {
+              "rows"  => {
+                "campaign_product" => {
+                  "solaranlagen" => {
+                    "columns" => {
+                      "cr" => {
+                        "functions" => {
+                          "order" => {
 
-                            },
-                            "arr" => [
-                              "alert" => {
-                                "type"         => "bollinger",
-                                "factor"       => 1,
-                                "nr_values"    => 10
-                              }
-                            ]
-                          }
+                          },
+                          "arr" => [
+                            "alert" => {
+                              "type"         => "bollinger",
+                              "factor"       => 1,
+                              "nr_values"    => 10
+                            }
+                          ]
                         }
                       }
                     }
                   }
-                },
-                "defaults" => {
-                  "columns" => {
-                    "clicks" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10
-                      }
+                }
+              },
+              "defaults" => {
+                "columns" => {
+                  "clicks" => {
+                    "alert" => {
+                      "factor"       => 3,
+                      "nr_values"    => 10
                     },
-                    "cpa" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10
-                      }
+                    "warn" => {
+                      "factor"       => 2,
+                      "nr_values"    => 10
+                    }
+                  },
+                  "cpa" => {
+                    "alert" => {
+                      "factor"       => 3,
+                      "nr_values"    => 10
                     },
-                    "impressions" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10
-                      }
+                    "warn" => {
+                      "factor"       => 2,
+                      "nr_values"    => 10
+                    }
+                  },
+                  "impressions" => {
+                    "alert" => {
+                      "factor"       => 3,
+                      "nr_values"    => 10
                     },
-                    "cost" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10
-                      }
+                    "warn" => {
+                      "factor"       => 2,
+                      "nr_values"    => 10
+                    }
+                  },
+                  "cost" => {
+                    "alert" => {
+                      "factor"       => 3,
+                      "nr_values"    => 10
                     },
-                    "conversions" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10
-                      }
+                    "warn" => {
+                      "factor"       => 2,
+                      "nr_values"    => 10
+                    }
+                  },
+                  "conversions" => {
+                    "alert" => {
+                      "factor"       => 3,
+                      "nr_values"    => 10
                     },
-                    "cr" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10
-                      }
+                    "warn" => {
+                      "factor"       => 2,
+                      "nr_values"    => 10
+                    }
+                  },
+                  "cr" => {
+                    "alert" => {
+                      "factor"       => 3,
+                      "nr_values"    => 10
+                    },
+                    "warn" => {
+                      "factor"       => 2,
+                      "nr_values"    => 10
                     }
                   }
                 }
