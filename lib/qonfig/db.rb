@@ -50,9 +50,17 @@ module Qonfig
                     "solaranlagen" => {
                       "columns" => {
                         "cr" => {
-                          "alert" => {
-                            "factor"       => 1,
-                            "nr_values"    => 10
+                          "functions" => {
+                            "order" => {
+
+                            },
+                            "arr" => [
+                              "alert" => {
+                                "type"         => "bollinger",
+                                "factor"       => 1,
+                                "nr_values"    => 10
+                              }
+                            ]
                           }
                         }
                       }
