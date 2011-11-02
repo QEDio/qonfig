@@ -41,6 +41,7 @@ module Qonfig
           "early_warning" => {
             "analytics" => {
               "rows"  => {
+
                 "campaign_product" => {
                   "solaranlagen" => {
                     "columns" => {

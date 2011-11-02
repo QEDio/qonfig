@@ -46,11 +46,13 @@ end
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
+require 'fixtures/fixtures'
+
 require 'qonfig'
 require 'rspec'
 require 'simplecov'
 
-require 'fixtures/fixtures'
+
 
 SimpleCov.start
 
