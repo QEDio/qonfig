@@ -30,24 +30,28 @@ module Qonfig
                       "alert" => {
                         "factor"       => 1,
                         "nr_values"    => 10,
-                        "data_points"  => "weekly"
+                        "data_points"  => "weekly",
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 1,
                         "nr_values"    => 10,
-                        "data_points"  => "weekly"
+                        "data_points"  => "weekly",
+                        "color"        => "#FFA500"
                       }
                     },
                     "conversions" => {
                       "alert" => {
                         "factor"       => 1,
                         "nr_values"    => 10,
-                        "data_points"  => "weekly"
+                        "data_points"  => "weekly",
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 1,
                         "nr_values"    => 10,
-                        "data_points"  => "weekly"
+                        "data_points"  => "weekly",
+                        "color"        => "#FFA500"
                       }
                     }
                   }

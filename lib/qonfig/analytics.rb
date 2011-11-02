@@ -191,7 +191,7 @@ module Qonfig
     end
 
     def self.bollinger_params
-      ["factor", "nr_values", "data_points"]
+      ["factor", "nr_values", "data_points", "color"]
     end
 
     def self.remove_defaults(column_config, column_defaults)

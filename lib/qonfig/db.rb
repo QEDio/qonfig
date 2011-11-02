@@ -64,61 +64,73 @@ module Qonfig
                     "clicks" => {
                       "alert" => {
                         "factor"       => 3,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 2,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#FFA500"
                       }
                     },
                     "cpa" => {
                       "alert" => {
                         "factor"       => 3,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 2,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#FFA500"
                       }
                     },
                     "impressions" => {
                       "alert" => {
                         "factor"       => 3,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 2,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#FFA500"
                       }
                     },
                     "cost" => {
                       "alert" => {
                         "factor"       => 3,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 2,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#FFA500"
                       }
                     },
                     "conversions" => {
                       "alert" => {
                         "factor"       => 3,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 2,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#FFA500"
                       }
                     },
                     "cr" => {
                       "alert" => {
                         "factor"       => 3,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#a00"
                       },
                       "warn" => {
                         "factor"       => 2,
-                        "nr_values"    => 10
+                        "nr_values"    => 10,
+                        "color"        => "#FFA500"
                       }
                     }
                   }
