@@ -1,16 +1,19 @@
+require 'uuid'
+
 module Qonfig
   module Analytics
     module Functions
       class Base
+        attr_accessor     :color, :periodicity, :name
+        attr_writer       :uuid
         attr_reader       :type
-        attr_accessor     :id, :color, :periodicity, :name
 
         def initialize( ext_params = {} )
           params = default_params.merge(ext_params)
 
           raise Exception.new("Need a type") if params[:type].nil?
 
-          @id           = params[:id]
+          @uuid         = params[:uuid]
           @type         = params[:type]
           @color        = params[:color]
           @periodicity  = params[:periodicity]
@@ -25,9 +28,13 @@ module Qonfig
           }
         end
 
+        def uuid
+          @uuid ||= UUID.new.generate(:compact)
+        end
+
         def serializable_hash
           {
-            :id           => id,
+            :uuid         => uuid,
             :type         => type,
             :color        => color,
             :periodicity  => periodicity,

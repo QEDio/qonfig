@@ -63,7 +63,7 @@ describe Qonfig::Analytics::Functions::Bollinger do
       end
 
       it "serializes all data" do
-        bollinger.serializable_hash.eql?(SERIALIZED_HASH)
+        bollinger.serializable_hash.eql?(BOLLINGER_SERIALIZED_HASH_1)
       end
 
       it "de/serializes correctly" do

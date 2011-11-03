@@ -2,7 +2,7 @@ module Qonfig
   module Analytics
     module Functions
       class Bollinger < Base
-        TYPE                                          = "bollinger"
+        TYPE                                          = "Bollinger"
         DEFAULT_DEVIATION_FACTOR                      = 1
         DEFAULT_DEVIATION_TYPE                        = "sd"
         DEFAULT_NUMBER_OF_VALUES_MOVING_AVERAGE       = 20

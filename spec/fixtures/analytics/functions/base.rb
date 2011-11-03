@@ -8,6 +8,7 @@ module Qonfig
             PERIODICITY       = "daily"
             COLOR             = "#xxxxxx"
             NAME              = "noName"
+            UUID              = "base_uuid"
           end
         end
       end

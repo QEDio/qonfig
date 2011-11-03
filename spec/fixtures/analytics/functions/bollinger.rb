@@ -10,13 +10,15 @@ module Qonfig
             DEVIATION_FACTOR                      = 99
             NUMBER_OF_VALUES_MOVING_AVERAGE       = 27
 
-            SERIALIZED_HASH                       = {
-              :type                             => "bollinger",
-              :color                            => "#xxxxxx",
-              :periodicity                      => "daily",
-              :deviation_factor                 => 99,
-              :deviation_type                   => "sd",
-              :number_of_values_moving_average  => 27
+            BOLLINGER_SERIALIZED_HASH_1         = {
+              :type                             => Qonfig::Analytics::Functions::Bollinger::TYPE,
+              :color                            => COLOR,
+              :periodicity                      => PERIODICITY,
+              :deviation_factor                 => DEVIATION_FACTOR,
+              :deviation_type                   => DEVIATION_TYPE,
+              :number_of_values_moving_average  => NUMBER_OF_VALUES_MOVING_AVERAGE,
+              :name                             => NAME,
+              :uuid                             => UUID
             }
           end
         end

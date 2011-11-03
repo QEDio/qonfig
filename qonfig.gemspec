@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activesupport'
   # require 'active_support/core_ext/string/inflections' has a dependency to ithtop
   s.add_runtime_dependency('i18n')
+  s.add_runtime_dependency 'uuid'
+
 
   s.add_development_dependency('turn')
   s.add_development_dependency('rspec')
