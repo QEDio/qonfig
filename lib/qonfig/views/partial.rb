@@ -2,18 +2,29 @@ module Qonfig
   module Views
     class Partial < Base
       attr_accessor :graphs
-      attr_accessor :data
+      attr_reader :data
+
+      TYPE              = "Qonfig::Views::Partial"
 
       def initialize(ext_params = {})
-        params        = default_params.merge(ext_params)
+        params        = default_params_weak.merge(ext_params).merge(default_params_strong)
 
         @graphs       = {}
-        add_graphs(params[:graphs])
+        add_graphs(params.delete(:graphs))
+        @data = params.delete(:data)
+        
+        super(params)
       end
 
-      def default_params
+      def default_params_weak
         {
-          :graphs => []
+          :graphs     => []
+        }
+      end
+
+      def default_params_strong
+        {
+          :type       => TYPE,
         }
       end
 
@@ -56,15 +67,7 @@ module Qonfig
         super.merge({
           :graphs           => serializable_graphs,
           :data             => data
-        })
-      end
-
-      def eql?(other)
-        serializable_hash = other.serializable_hash
-      end
-
-      def ==(other)
-        eql?(other)
+        }).delete_if{|k,v|v.nil?}
       end
     end
   end

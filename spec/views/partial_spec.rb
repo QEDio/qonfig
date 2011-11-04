@@ -13,13 +13,27 @@ describe Qonfig::Views::Partial do
     end
 
     it "de/serializes correctly" do
-      partial.uuid                  = VIEW_BASE_UUID
-      partial.name                  = VIEW_BASE_NAME
-      partial.order                 = VIEW_BASE_ORDER
-      partial.description           = VIEW_BASE_DESCRIPTION
-      partial.add_graphs(VIEW_PARTIAL_GRAPHS)
+      partial.uuid                  = VIEWS_BASE_UUID
+      partial.name                  = VIEWS_BASE_NAME
+      partial.order                 = VIEWS_BASE_ORDER
+      partial.description           = VIEWS_BASE_DESCRIPTION
+      partial.add_graphs(VIEWS_PARTIAL_GRAPHS_1)
 
       partial.should == Qonfig::Views::Partial.new(partial.serializable_hash)
+    end
+  end
+
+  context "when building from a serialized hash" do
+    let(:partial) do
+      Qonfig::Views::Partial.new(VIEWS_PARTIAL_SERIALIZED_HASH_1)
+    end
+
+    it "should create a correct initialized object" do
+      partial.uuid.should                       == VIEWS_PARTIAL_UUID_1
+      partial.name.should                       == VIEWS_PARTIAL_NAME_1
+      partial.description.should                == VIEWS_PARTIAL_DESCRIPTION_1
+      partial.order.should                      == VIEWS_PARTIAL_ORDER_1
+      partial.serializable_graphs.should        == VIEWS_PARTIAL_GRAPHS_1
     end
   end
 end

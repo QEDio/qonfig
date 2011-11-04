@@ -3,15 +3,26 @@ module Qonfig
     class View < Base
       attr_accessor   :partials
 
-      def initialize(ext_params = {})
-        params        = default_params.merge(ext_params)
+      TYPE        = "Qonfig::Views::View"
 
-        add_partials(params[:partials])
+      def initialize(ext_params = {})
+        params        = default_params_weak.merge(ext_params).merge(default_params_strong)
+
+        @partials = {}
+        add_partials(params.delete(:partials))
+
+        super(params)
       end
 
-      def default_params
+      def default_params_weak
         {
-          :partials => {}
+          :partials => []
+        }
+      end
+
+      def default_params_strong
+        {
+          :type     => TYPE
         }
       end
 
@@ -44,6 +55,16 @@ module Qonfig
         {
           
         }
+      end
+
+      def serializable_hash
+        super.merge({
+          :partials           => serializable_partials
+        }).delete_if{|k,v|v.nil?}
+      end
+
+      def serializable_partials
+        @partials.map{|k,v| v.serializable_hash }
       end
     end
   end
