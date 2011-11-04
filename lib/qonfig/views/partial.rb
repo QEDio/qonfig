@@ -7,12 +7,13 @@ module Qonfig
       def initialize(ext_params = {})
         params        = default_params.merge(ext_params)
 
+        @graphs       = {}
         add_graphs(params[:graphs])
       end
 
       def default_params
         {
-          :partials => {}
+          :graphs => []
         }
       end
 
@@ -35,7 +36,7 @@ module Qonfig
 
         if( graph.is_a?(Hash) )
           raise Exception.new("Need an uuid") if graph[:uuid].blank?
-          @graphs[graph[:uuid]] = Graph.new(graph)
+          @graphs[graph[:uuid]] = Analytics::Graph.new(graph)
         elsif( graph.is_a?(Partial) )
           @graphs[graph.uuid] = graph
         end
@@ -45,6 +46,25 @@ module Qonfig
         {
 
         }
+      end
+
+      def serializable_graphs
+        @graphs.map{|k,v|v.serializable_hash}
+      end
+
+      def serializable_hash
+        super.merge({
+          :graphs           => serializable_graphs,
+          :data             => data
+        })
+      end
+
+      def eql?(other)
+        serializable_hash = other.serializable_hash
+      end
+
+      def ==(other)
+        eql?(other)
       end
     end
   end

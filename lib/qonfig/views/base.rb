@@ -24,6 +24,15 @@ module Qonfig
       def uuid
         @uuid ||= UUID.new().generate(:compact)
       end
+
+      def serializable_hash
+        {
+          :uuid                 => uuid,
+          :name                 => name,
+          :description          => description,
+          :order                => order
+        }
+      end
     end
   end
 end

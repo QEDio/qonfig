@@ -28,7 +28,7 @@ module Qonfig
 
       def default_params
         {
-          :functions    => [],
+          :functions    => [], # functions are provided externally as array, but stored internally in a hash
           :order        => []
         }
       end
