@@ -98,7 +98,7 @@ module Qonfig
           :column_value     => column_value,
           :functions        => serializable_functions,
           :order            => order,
-          #:type             => self.class
+          :type             => self.class.to_s
         }
       end
 

@@ -12,6 +12,7 @@ module Qonfig
 
         raise Exception.new("Need a type") if params[:type].nil?
 
+        @type           = params[:type].to_s
         @uuid           = params[:uuid]
         @name           = params[:name]
         @description    = params[:description]
@@ -34,7 +35,8 @@ module Qonfig
           :type                 => type,
           :name                 => name,
           :description          => description,
-          :order                => order
+          :order                => order,
+          :type                 => type
         }.delete_if{|k,v|v.nil?}
       end
 

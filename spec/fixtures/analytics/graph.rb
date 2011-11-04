@@ -30,6 +30,7 @@ module Qonfig
 
 
           ANALYTICS_GRAPH_SERIALIZED_HASH_1 = {
+            :type           => Qonfig::Analytics::Graph.to_s,
             :uuid           => ANALYTICS_GRAPH_UUID_1,
             :row_key        => ANALYTICS_GRAPH_ROW_KEY_1,
             :row_value      => ANALYTICS_GRAPH_ROW_VALUE_1,
@@ -42,6 +43,7 @@ module Qonfig
           }
 
           ANALYTICS_GRAPH_SERIALIZED_HASH_2 = {
+            :type           => Qonfig::Analytics::Graph.to_s,
             :uuid           => ANALYTICS_GRAPH_UUID_2,
             :row_key        => ANALYTICS_GRAPH_ROW_KEY_2,
             :row_value      => ANALYTICS_GRAPH_ROW_VALUE_2,

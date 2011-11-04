@@ -4,8 +4,6 @@ module Qonfig
       attr_accessor :graphs
       attr_reader :data
 
-      TYPE              = "Qonfig::Views::Partial"
-
       def initialize(ext_params = {})
         params        = default_params_weak.merge(ext_params).merge(default_params_strong)
 
@@ -24,7 +22,7 @@ module Qonfig
 
       def default_params_strong
         {
-          :type       => TYPE,
+          :type       => self.class,
         }
       end
 

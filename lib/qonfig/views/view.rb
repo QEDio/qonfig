@@ -3,8 +3,6 @@ module Qonfig
     class View < Base
       attr_accessor   :partials
 
-      TYPE        = "Qonfig::Views::View"
-
       def initialize(ext_params = {})
         params        = default_params_weak.merge(ext_params).merge(default_params_strong)
 
@@ -22,7 +20,7 @@ module Qonfig
 
       def default_params_strong
         {
-          :type     => TYPE
+          :type     => self.class
         }
       end
 

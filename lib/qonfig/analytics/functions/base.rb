@@ -14,7 +14,7 @@ module Qonfig
           raise Exception.new("Need a type") if params[:type].nil?
 
           @uuid         = params[:uuid]
-          @type         = params[:type]
+          @type         = params[:type].to_s
           @color        = params[:color]
           @periodicity  = params[:periodicity]
           @name         = params[:name]

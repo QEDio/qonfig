@@ -11,7 +11,7 @@ module Qonfig
             NUMBER_OF_VALUES_MOVING_AVERAGE       = 27
 
             BOLLINGER_SERIALIZED_HASH_1         = {
-              :type                             => Qonfig::Analytics::Functions::Bollinger::TYPE,
+              :type                             => "Qonfig::Analytics::Functions::Bollinger",
               :color                            => COLOR,
               :periodicity                      => PERIODICITY,
               :deviation_factor                 => DEVIATION_FACTOR,

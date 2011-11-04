@@ -22,6 +22,7 @@ module Qonfig
 
 
           VIEWS_PARTIAL_SERIALIZED_HASH_1 = {
+            :type           => Qonfig::Views::Partial.to_s,
             :uuid           => VIEWS_PARTIAL_UUID_1,
             :name           => VIEWS_PARTIAL_NAME_1,
             :description    => VIEWS_PARTIAL_DESCRIPTION_1,
@@ -30,6 +31,7 @@ module Qonfig
           }
 
           VIEWS_PARTIAL_SERIALIZED_HASH_2 = {
+            :type           => Qonfig::Views::Partial.to_s,
             :uuid           => VIEWS_PARTIAL_UUID_2,
             :name           => VIEWS_PARTIAL_NAME_2,
             :description    => VIEWS_PARTIAL_DESCRIPTION_2,

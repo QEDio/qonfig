@@ -11,7 +11,7 @@ describe Qonfig::Analytics::Functions::Bollinger do
       end
 
       it "sets the correct type" do
-        bollinger.type.should == Qonfig::Analytics::Functions::Bollinger::TYPE
+        bollinger.type.should == Qonfig::Analytics::Functions::Bollinger.to_s
       end
 
       it "sets the default values" do
@@ -50,7 +50,7 @@ describe Qonfig::Analytics::Functions::Bollinger do
       end
 
       it "set the type to the 'bollinger' regardless of the supplied type" do
-        bollinger.type.should == Qonfig::Analytics::Functions::Bollinger::TYPE
+        bollinger.type.should == Qonfig::Analytics::Functions::Bollinger.to_s
       end
 
       it "set the supplied values" do

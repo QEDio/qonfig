@@ -12,7 +12,12 @@ module Qonfig
         def self.build(obj)
           if( obj.is_a?(Hash) )
             raise Exception.new("Need a type to perform my duties") if obj[:type].nil?
-            return "Qonfig::Analytics::Functions::#{obj[:type]}".constantize.new(obj)
+
+            if obj[:type].is_a?(String)
+              return obj[:type].constantize.new(obj)
+            else
+              return obj[:type].new(obj)
+            end
           elsif( obj.is_a?(Qonfig::Analytics::Functions::Base) )
             return obj
           end
