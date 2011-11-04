@@ -35,11 +35,70 @@ module Qonfig
       }
     end
 
-    {
-
-    }
-    
     def self.data
+      {
+        "type"          => "Qonfig::Views::View",
+        "uuid"         => "views_view_uuid",
+        "name"         => "Early Warning",
+        "description"  => "With early warning you can do nothing wrong!",
+        "order"        => [],
+        "partials"     =>
+          [{
+            "type"          => "Qonfig::Views::Partial",
+            "uuid"          => "views_partial_uuid_1",
+            "name"          => "Adwords",
+            "description"   => "Data form Google Adwords to show the way!",
+            "order"         => ["keine_2", "keine_1"],
+            "graphs"        => [
+              {
+                "type"          => "Qonfig::Analytics::Graph",
+                "uuid"          => "keine_1",
+                "row_key"       => "row_key_1",
+                "row_value"     => "row_value_1",
+                "column_key"    => "column_key_1",
+                "column_value"  => "column_value_1",
+                "name"          => "Conversions",
+                "description"   => "For something big",
+                "order"         => ["base_uuid"],
+                "functions"     =>
+                  [{
+                    "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                    "color"                           => "#xxxxxx",
+                    "periodicity"                     => "daily",
+                    "deviation_factor"                => 99,
+                    "deviation_type"                  => "sd",
+                    "number_of_values_moving_average" => 27,
+                    "name"                            => "noName",
+                    "uuid"                            => "base_uuid"
+                  }]
+              },
+              {
+                "type"          => "Qonfig::Analytics::Graph",
+                "uuid"          => "keine_1",
+                "row_key"       => "row_key_1",
+                "row_value"     => "row_value_1",
+                "column_key"    => "column_key_1",
+                "column_value"  => "column_value_1",
+                "name"          => "Conversions",
+                "description"   => "For something big",
+                "order"         => ["base_uuid"],
+                "functions"     =>
+                  [{
+                    "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                    "color"                           => "#xxxxxx",
+                    "periodicity"                     => "daily",
+                    "deviation_factor"                => 99,
+                    "deviation_type"                  => "sd",
+                    "number_of_values_moving_average" => 27,
+                    "name"                            => "noName",
+                    "uuid"                            => "base_uuid"
+                  }]
+              }]
+          }]
+      }
+    end
+    
+    def self.data1
       {
         "kp" => {
           "early_warning" => {

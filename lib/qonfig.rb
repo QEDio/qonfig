@@ -3,8 +3,12 @@ require 'qonfig/db'
 require 'qonfig/analytics/analytics'
 require 'qonfig/views/views'
 
+require 'qonfig/adapters/adapters'
+require 'qonfig/factory'
+
 # this should be not be necessary after refactor
 require 'qonfig/analytic'
+
 
 
 module Qonfig
