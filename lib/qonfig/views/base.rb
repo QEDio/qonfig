@@ -41,7 +41,11 @@ module Qonfig
       end
 
       def eql?(other)
-        serializable_hash == other.serializable_hash
+        if( other )
+          return (serializable_hash == other.serializable_hash)
+        end
+
+        return false
       end
 
       def ==(other)
