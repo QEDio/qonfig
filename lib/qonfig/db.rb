@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 module Qonfig
   class Db
     attr_reader :data
@@ -13,11 +14,7 @@ module Qonfig
       conf = data[options[:user]]
 
       if( conf && options[:view] )
-        conf = conf[options[:view]]
-
-        if( conf && options[:functions] )
-          conf = conf[options[:functions]]
-        end
+        conf = Qonfig::Factory.build(conf[options[:view]].symbolize_keys_rec)
       end
 
       return conf
@@ -37,64 +34,174 @@ module Qonfig
 
     def self.data
       {
-        "type"          => "Qonfig::Views::View",
-        "uuid"         => "views_view_uuid",
-        "name"         => "Early Warning",
-        "description"  => "With early warning you can do nothing wrong!",
-        "order"        => [],
-        "partials"     =>
-          [{
-            "type"          => "Qonfig::Views::Partial",
-            "uuid"          => "views_partial_uuid_1",
-            "name"          => "Adwords",
-            "description"   => "Data form Google Adwords to show the way!",
-            "order"         => ["keine_2", "keine_1"],
-            "graphs"        => [
+        "kp" => {
+          "early_warning" => {
+            "type"         => "Qonfig::Views::View",
+            "uuid"         => "views_view_uuid",
+            "name"         => "Early Warning",
+            "description"  => "With early warning you can do nothing wrong!",
+            "order"        => ["views_partial_uuid_1"],
+            "partials"     => [
               {
-                "type"          => "Qonfig::Analytics::Graph",
-                "uuid"          => "keine_1",
-                "row_key"       => "row_key_1",
-                "row_value"     => "row_value_1",
-                "column_key"    => "column_key_1",
-                "column_value"  => "column_value_1",
-                "name"          => "Conversions",
-                "description"   => "For something big",
-                "order"         => ["base_uuid"],
-                "functions"     =>
-                  [{
-                    "type"                            => "Qonfig::Analytics::Functions::Bollinger",
-                    "color"                           => "#xxxxxx",
-                    "periodicity"                     => "daily",
-                    "deviation_factor"                => 99,
-                    "deviation_type"                  => "sd",
-                    "number_of_values_moving_average" => 27,
-                    "name"                            => "noName",
-                    "uuid"                            => "base_uuid"
-                  }]
-              },
-              {
-                "type"          => "Qonfig::Analytics::Graph",
-                "uuid"          => "keine_1",
-                "row_key"       => "row_key_1",
-                "row_value"     => "row_value_1",
-                "column_key"    => "column_key_1",
-                "column_value"  => "column_value_1",
-                "name"          => "Conversions",
-                "description"   => "For something big",
-                "order"         => ["base_uuid"],
-                "functions"     =>
-                  [{
-                    "type"                            => "Qonfig::Analytics::Functions::Bollinger",
-                    "color"                           => "#xxxxxx",
-                    "periodicity"                     => "daily",
-                    "deviation_factor"                => 99,
-                    "deviation_type"                  => "sd",
-                    "number_of_values_moving_average" => 27,
-                    "name"                            => "noName",
-                    "uuid"                            => "base_uuid"
-                  }]
-              }]
-          }]
+                "type"          => "Qonfig::Views::Partial",
+                "uuid"          => "views_partial_uuid_1",
+                "name"          => "Adwords",
+                "description"   => "Data form Google Adwords to show the way!",
+                "order"         => ["keine_2", "keine_1"],
+                "graphs"        => [
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "keine_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "conversions",
+                    "column_value"  => "",
+                    "name"          => "Conversions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      },
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#f0a313",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 2,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "warn",
+                        "uuid"                            => "warn_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "keine_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "cost",
+                    "column_value"  => "",
+                    "name"          => "Cost",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "keine_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "impressions",
+                    "column_value"  => "",
+                    "name"          => "Impressions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "keine_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "cr",
+                    "column_value"  => "",
+                    "name"          => "CR",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "keine_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "cpa",
+                    "column_value"  => "",
+                    "name"          => "CPA",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "keine_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "clicks",
+                    "column_value"  => "",
+                    "name"          => "Clicks",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
       }
     end
     

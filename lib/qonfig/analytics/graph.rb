@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'uuid'
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/object/blank'

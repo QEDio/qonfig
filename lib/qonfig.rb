@@ -1,3 +1,4 @@
+require 'core_ext/enumerable'
 require "qonfig/version"
 require 'qonfig/db'
 require 'qonfig/analytics/analytics'

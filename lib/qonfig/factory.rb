@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 module Qonfig
   class Factory
     def initialize
