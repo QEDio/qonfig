@@ -26,9 +26,10 @@ module Qonfig
 
       def add_partials(partials, ext_options = {})
         options     = default_add_partials_options.merge(ext_options)
+        partials    = [partials] unless Array.try_convert(partials)
 
         Array(partials).each do |partial|
-          add_partial(partial)
+          add_partial(partial, options)
         end
       end
 
@@ -58,7 +59,7 @@ module Qonfig
       def serializable_hash
         super.merge({
           :partials           => serializable_partials
-        }).delete_if{|k,v|v.nil?}
+        }).delete_if{|k,v|v.blank?}
       end
 
       def serializable_partials

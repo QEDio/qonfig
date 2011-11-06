@@ -100,7 +100,7 @@ module Qonfig
           :functions        => serializable_functions,
           :order            => order,
           :type             => self.class.to_s
-        }
+        }.delete_if{|k,v|v.nil?}
       end
 
       def serializable_functions

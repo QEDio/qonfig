@@ -25,11 +25,11 @@ describe Qonfig::Analytic do
     graphs = view.partials["views_partial_uuid_1"].graphs
     
     graphs.size.should == 6
-    graphs["graph_1"].class.should == Qonfig::Analytics::Graph
+    graphs["graph_uuid_1"].class.should == Qonfig::Analytics::Graph
   end
 
   it "should create the functions in the graphs in the partials in the view for me" do
-    graphs    = view.partials["views_partial_uuid_1"].graphs["graph_1"]
+    graphs    = view.partials["views_partial_uuid_1"].graphs["graph_uuid_1"]
     functions = graphs.functions
 
     #puts functions.inspect

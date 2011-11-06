@@ -17,6 +17,54 @@ module Qonfig
                 "name"          => "Adwords",
                 "description"   => "Data form Google Adwords to show the way!",
                 "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
+                "default_graphs"=> [
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "default_graph_uuid_1",
+                    "row_key"       => nil,
+                    "row_value"     => nil,
+                    "column_key"    => nil,
+                    "column_value"  => "",
+                    "name"          => "Conversions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "default_graph_uuid_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => nil,
+                    "column_key"    => nil,
+                    "column_value"  => "",
+                    "name"          => "Conversions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  }
+                ],
                 "graphs"        => [
                   {
                     "type"          => "Qonfig::Analytics::Graph",
