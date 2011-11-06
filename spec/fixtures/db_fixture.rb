@@ -16,11 +16,11 @@ module Qonfig
                 "uuid"          => "views_partial_uuid_1",
                 "name"          => "Adwords",
                 "description"   => "Data form Google Adwords to show the way!",
-                "order"         => ["graph_1", "graph_2", "graph_3", "graph_4", "graph_5", "graph_6"],
+                "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
                 "graphs"        => [
                   {
                     "type"          => "Qonfig::Analytics::Graph",
-                    "uuid"          => "graph_1",
+                    "uuid"          => "graph_uuid_1",
                     "row_key"       => "campaign_product",
                     "row_value"     => "solaranlagen",
                     "column_key"    => "conversions",
@@ -53,14 +53,14 @@ module Qonfig
                   },
                   {
                     "type"          => "Qonfig::Analytics::Graph",
-                    "uuid"          => "graph_2",
+                    "uuid"          => "graph_uuid_2",
                     "row_key"       => "campaign_product",
                     "row_value"     => "solaranlagen",
                     "column_key"    => "cost",
                     "column_value"  => "",
                     "name"          => "Cost",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid", "warn_uuid"],
+                    "order"         => ["error_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
@@ -76,14 +76,14 @@ module Qonfig
                   },
                   {
                     "type"          => "Qonfig::Analytics::Graph",
-                    "uuid"          => "graph_3",
+                    "uuid"          => "graph_uuid_3",
                     "row_key"       => "campaign_product",
                     "row_value"     => "solaranlagen",
                     "column_key"    => "impressions",
                     "column_value"  => "",
                     "name"          => "Impressions",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid", "warn_uuid"],
+                    "order"         => ["error_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
@@ -99,14 +99,14 @@ module Qonfig
                   },
                   {
                     "type"          => "Qonfig::Analytics::Graph",
-                    "uuid"          => "graph_4",
+                    "uuid"          => "graph_uuid_4",
                     "row_key"       => "campaign_product",
                     "row_value"     => "solaranlagen",
                     "column_key"    => "cr",
                     "column_value"  => "",
                     "name"          => "CR",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid", "warn_uuid"],
+                    "order"         => ["error_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
@@ -122,14 +122,14 @@ module Qonfig
                   },
                   {
                     "type"          => "Qonfig::Analytics::Graph",
-                    "uuid"          => "graph_5",
+                    "uuid"          => "graph_uuid_5",
                     "row_key"       => "campaign_product",
                     "row_value"     => "solaranlagen",
                     "column_key"    => "cpa",
                     "column_value"  => "",
                     "name"          => "CPA",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid", "warn_uuid"],
+                    "order"         => ["error_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
@@ -145,14 +145,14 @@ module Qonfig
                   },
                   {
                     "type"          => "Qonfig::Analytics::Graph",
-                    "uuid"          => "graph_6",
+                    "uuid"          => "graph_uuid_6",
                     "row_key"       => "campaign_product",
                     "row_value"     => "solaranlagen",
                     "column_key"    => "clicks",
                     "column_value"  => "",
                     "name"          => "Clicks",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid", "warn_uuid"],
+                    "order"         => ["error_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
