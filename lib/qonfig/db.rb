@@ -47,7 +47,7 @@ module Qonfig
                 "uuid"          => "views_partial_uuid_1",
                 "name"          => "Adwords",
                 "description"   => "Data form Google Adwords to show the way!",
-                "order"         => ["keine_2", "keine_1"],
+                "order"         => ["error_uuid", "warn_uuid"],
                 "graphs"        => [
                   {
                     "type"          => "Qonfig::Analytics::Graph",
