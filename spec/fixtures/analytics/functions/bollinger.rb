@@ -24,7 +24,8 @@ module Qonfig
               :deviation_type                   => DEVIATION_TYPE,
               :number_of_values_moving_average  => NUMBER_OF_VALUES_MOVING_AVERAGE,
               :name                             => NAME,
-              :uuid                             => UUID
+              :uuid                             => UUID,
+              :configurable_attributes          => ["deviation_factor", "deviation_type"]
             }
 
             BOLLINGER_DEFAULT_SERIALIZED_HASH_1         = {
@@ -35,7 +36,8 @@ module Qonfig
               :deviation_type                         => DEFAULT_DEVIATION_TYPE,
               :number_of_values_moving_average        => DEFAULT_NUMBER_OF_VALUES_MOVING_AVERAGE,
               :name                                   => DEFAULT_NAME,
-              :uuid                                   => DEFAULT_UUID
+              :uuid                                   => DEFAULT_UUID,
+              :configurable_attributes                => ["deviation_factor", "deviation_type"]
             }
           end
         end

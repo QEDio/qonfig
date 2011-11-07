@@ -2,12 +2,13 @@ module Qonfig
   module Analytics
     module Functions
       class Bollinger < Base
+        attr_accessor :deviation_factor, :deviation_type
+        attr_accessor :number_of_values_moving_average
+
         DEFAULT_DEVIATION_FACTOR                      = 1
         DEFAULT_DEVIATION_TYPE                        = "sd"
         DEFAULT_NUMBER_OF_VALUES_MOVING_AVERAGE       = 20
-
-        attr_accessor :deviation_factor, :deviation_type
-        attr_accessor :number_of_values_moving_average
+        CONFIGURABLE_ATTRIBUTES                       = ["deviation_factor", "deviation_type", "number_of_values_moving_average"]
 
         def initialize( ext_params = {} )
           params = default_params_weak.merge(ext_params).merge(default_params_strong)
@@ -20,7 +21,7 @@ module Qonfig
 
         def default_params_strong
           {
-            :type     => self.class
+            :type                               => self.class
           }
         end
 
@@ -28,7 +29,8 @@ module Qonfig
           {
             :deviation_factor                   => DEFAULT_DEVIATION_FACTOR,
             :deviation_type                     => DEFAULT_DEVIATION_TYPE,
-            :number_of_values_moving_average    => DEFAULT_NUMBER_OF_VALUES_MOVING_AVERAGE
+            :number_of_values_moving_average    => DEFAULT_NUMBER_OF_VALUES_MOVING_AVERAGE,
+            :configurable_attributes            => CONFIGURABLE_ATTRIBUTES
           }
         end
 
