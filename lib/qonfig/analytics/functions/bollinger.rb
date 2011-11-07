@@ -8,7 +8,7 @@ module Qonfig
         DEFAULT_DEVIATION_FACTOR                      = 1
         DEFAULT_DEVIATION_TYPE                        = "sd"
         DEFAULT_NUMBER_OF_VALUES_MOVING_AVERAGE       = 20
-        CONFIGURABLE_ATTRIBUTES                       = ["name", "color", "deviation_type", "number_of_values_moving_average"]
+        CONFIGURABLE_ATTRIBUTES                       = ["name", "color", "number_of_values_moving_average"]
 
         def initialize( ext_params = {} )
           params = default_params_weak.merge(ext_params).merge(default_params_strong)
