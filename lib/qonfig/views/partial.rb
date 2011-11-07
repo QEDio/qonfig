@@ -2,8 +2,7 @@
 module Qonfig
   module Views
     class Partial < Base
-      attr_accessor :graphs, :default_graphs
-      attr_reader :data
+      attr_accessor :graphs, :default_graphs, :data_set
 
       SEARCH_ORDER = [
         [:row_key, :row_value, :column_key],
@@ -12,11 +11,13 @@ module Qonfig
       ]
 
       def initialize(ext_params = {})
-        params              = default_params_weak.merge(ext_params).merge(default_params_strong)
+        params              = default_params_weak.merge(ext_params||{}).merge(default_params_strong)
 
         @graphs             = {}
         @default_graphs     = {}
-        @data               = params.delete(:data)
+
+
+        set_data_set(params.delete(:data_set))
         add_graphs(params.delete(:graphs))
         add_default_graphs(params.delete(:default_graphs))
 
@@ -26,7 +27,7 @@ module Qonfig
       def default_params_weak
         {
           :graphs               => [],
-          :default_graphs       => []
+          :default_graphs       => [],
         }
       end
 
@@ -34,6 +35,10 @@ module Qonfig
         {
           :type       => self.class,
         }
+      end
+
+      def set_data_set( data_set )
+        @data_set = DataSets::DataSet.new( data_set )
       end
 
       def add_graphs(graphs, ext_options = {})
@@ -102,7 +107,7 @@ module Qonfig
         super.merge({
           :graphs           => serializable_graphs,
           :default_graphs   => serializable_graphs(default_graphs),
-          :data             => data
+          :data_set         => data_set.serializable_hash
         }).delete_if{|k,v|v.blank?}
       end
 

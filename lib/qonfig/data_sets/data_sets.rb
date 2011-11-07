@@ -1,0 +1,7 @@
+require 'qonfig/data_sets/base'
+require 'qonfig/data_sets/format_base'
+require 'qonfig/data_sets/format_row'
+require 'qonfig/data_sets/format_column'
+require 'qonfig/data_sets/format'
+require 'qonfig/data_sets/data_set'
+require 'qonfig/data_sets/data_source'
