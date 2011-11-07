@@ -62,6 +62,7 @@ module Qonfig
           ANALYTICS_GRAPH_DEFAULT_COLUMN_KEY_4            = ANALYTICS_GRAPH_COLUMN_KEY_1
 
 
+          ### Completly filled hashes for complete objects without default merging
           ANALYTICS_GRAPH_SERIALIZED_HASH_1 = {
             :type           => Qonfig::Analytics::Graph.to_s,
             :uuid           => ANALYTICS_GRAPH_UUID_1,
@@ -88,6 +89,30 @@ module Qonfig
             :functions      => ANALYTICS_GRAPH_FUNCTIONS_2
           }
 
+          # sparsely filled objects with default merging
+          ANALYTICS_GRAPH_SERIALIZED_HASH_3 = {
+            :type           => Qonfig::Analytics::Graph.to_s,
+            :uuid           => ANALYTICS_GRAPH_UUID_1,
+            :row_key        => ANALYTICS_GRAPH_ROW_KEY_1,
+            :row_value      => ANALYTICS_GRAPH_ROW_VALUE_1,
+            :column_key     => ANALYTICS_GRAPH_COLUMN_KEY_1,
+          }
+
+          ANALYTICS_GRAPH_SERIALIZED_HASH_4 = {
+            :type           => Qonfig::Analytics::Graph.to_s,
+            :uuid           => ANALYTICS_GRAPH_UUID_2,
+            :row_key        => ANALYTICS_GRAPH_ROW_KEY_2,
+            :row_value      => ANALYTICS_GRAPH_ROW_VALUE_2,
+            :column_key     => ANALYTICS_GRAPH_COLUMN_KEY_2,
+            :column_value   => ANALYTICS_GRAPH_COLUMN_VALUE_2,
+            :name           => ANALYTICS_GRAPH_NAME_2,
+            :description    => ANALYTICS_GRAPH_DESCRIPTION_2,
+            :order          => ANALYTICS_GRAPH_ORDER_2,
+            :functions      => ANALYTICS_GRAPH_FUNCTIONS_2
+          }
+
+
+          # hashes for default objects
           ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1 = {
             :type           => Qonfig::Analytics::Graph.to_s,
             :uuid           => ANALYTICS_GRAPH_DEFAULT_UUID_1,

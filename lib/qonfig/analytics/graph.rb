@@ -88,6 +88,17 @@ module Qonfig
         }
       end
 
+      def merge(other)
+        raise Exception.new("Needs to be of type: #{self.class}, but is: #{other.class}") unless self.class.eql?(other.class)
+
+        @name             = other.name if( @name.blank? )
+        @description      = other.description if( @description.blank? )
+        @order            = other.order if ( @order.blank? )
+        @functions        = other.functions if( @functions.blank? )
+
+        return self
+      end
+
       def serializable_hash
         {
           :uuid             => uuid,

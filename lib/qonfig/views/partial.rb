@@ -5,6 +5,12 @@ module Qonfig
       attr_accessor :graphs, :default_graphs
       attr_reader :data
 
+      SEARCH_ORDER = [
+        [:row_key, :row_value, :column_key],
+        [:row_key, :row_value],
+        [:row_key]
+      ]
+
       def initialize(ext_params = {})
         params              = default_params_weak.merge(ext_params).merge(default_params_strong)
 
@@ -59,17 +65,19 @@ module Qonfig
         options         = default_get_graph_options.merge(ext_options)
 
         if( options[:with_defaults] )
-          graph   = get_graph_int( graphs, options )
-          default = get_default_graph(ext_options)
+          graph   = get_the_graph( graphs, options )
+          default = get_default_graph( options )
 
           # this should normally not happen
           if( graph.nil? && default.nil? )
             graph = Analytics::Graph.new
           elsif graph.nil?
             graph = default
+          else
+            graph = graph.merge(default)
           end
         else
-          graph = get_graph_int( graphs, options )
+          graph = get_the_graph( graphs, options )
         end
 
         return graph
@@ -82,8 +90,8 @@ module Qonfig
       end
 
       def get_default_graph(ext_options = {})
-        options       = {}.merge(ext_options)
-        get_graph_int( default_graphs, options )
+        options       = {:default_matching => true}.merge(ext_options)
+        get_the_graph( default_graphs, options )
       end
 
       def serializable_graphs(g = graphs)
@@ -105,6 +113,40 @@ module Qonfig
           graphs.each do |graph|
             add_graph(graph, options)
           end
+        end
+
+        def get_the_graph( data, ext_options )
+          raise Exception.new("column_value not supported yet") if ext_options[:column_value].present?
+          options                 = default_get_the_graph_options.merge(ext_options)
+          graph                   = nil
+
+          # don't "fuzzy-match". We want the one matching config, or nothing
+          if( options[:default_matching] == false )
+            graph = get_graph_int( data, options )
+          # fuzzy matching for default config
+          else
+            options[:search_order].each do |order|
+              search_hsh  = {}
+              order.each{|o| search_hsh[o] = options[o]}
+
+              graph = get_graph_int( data, search_hsh )
+  
+              break if graph.present?
+            end
+
+            if graph.blank?
+              graph = get_graph_int( data, {} )
+            end
+          end
+
+          return graph
+        end
+
+        def default_get_the_graph_options
+          {
+            :search_order       => SEARCH_ORDER,
+            :default_matching   => false
+          }
         end
 
         def get_graph_int( data, options )
@@ -148,6 +190,7 @@ module Qonfig
           
           return graph.values.first
         end
+
     end
   end
 end

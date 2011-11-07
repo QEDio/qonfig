@@ -40,7 +40,7 @@ describe Qonfig::Views::Partial do
     end
   end
 
-  context "testing its default merging capabilityes" do
+  context "testing its default matching capabilities" do
     let(:partial) do
       Qonfig::Views::Partial.new(VIEWS_PARTIAL_DEFAULT_SERIALIZED_HASH_1)
     end
@@ -68,6 +68,36 @@ describe Qonfig::Views::Partial do
         :row_value      => ANALYTICS_GRAPH_DEFAULT_ROW_VALUE_4,
         :column_key     => ANALYTICS_GRAPH_DEFAULT_COLUMN_KEY_4
       ).serializable_hash.should == ANALYTICS_DEFAULT_GRAPH_ROW_KEY_ROW_VALUE_COLUMN_KEY_SERIALIZED_HASH_1
+    end
+  end
+
+  context "testing it's default merging capabilities" do
+    let(:partial) do
+      Qonfig::Views::Partial.new(VIEWS_PARTIAL_SERIALIZED_HASH_3)
+    end
+
+    it "should return the merged contents of the matching default config and graph config" do
+      graph = partial.get_graph(
+        :row_key      => ANALYTICS_GRAPH_ROW_KEY_1,
+        :row_value    => ANALYTICS_GRAPH_ROW_VALUE_1,
+        :column_key   => ANALYTICS_GRAPH_COLUMN_KEY_1,
+        :with_defaults=> true
+      )
+      
+      graph.serializable_hash.should_not  == ANALYTICS_GRAPH_SERIALIZED_HASH_3
+      graph.serializable_hash.should_not  == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1
+
+      ####### fine checking,
+      #### from configured graph
+      graph.uuid.should                   == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:uuid]
+      graph.row_key.should                == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:row_key]
+      graph.row_value.should              == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:row_value]
+      graph.column_key.should             == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:column_key]
+
+      #### from default graph
+      graph.name.should                   == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1[:name]
+      graph.description.should            == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1[:description]
+      graph.serializable_functions.should == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1[:functions]
     end
   end
 end
