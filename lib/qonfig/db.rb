@@ -48,6 +48,30 @@ module Qonfig
                 "name"          => "Adwords",
                 "description"   => "Data form Google Adwords to show the way!",
                 "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
+                "data_set"      => {
+                  "format" => [
+                    {
+                      "row"       => {
+                      },
+                      "column"    => {
+                        "key"             => "cr",
+                        "key_mapping"     => "CR",
+                        "value_mapping"   => [
+                          {"Käuferportal" => "Selbstwerbung - KP"}
+                        ],
+                        "value_functions" => [
+                          {:lambda => lambda{|str| str.capitalize}}
+                        ]
+                      },
+                      "key"       => "CR",
+                      "values"   => {
+                        "functions" => [
+                          {:lambda => lambda {|number,places=1| "%.#{places}f" % number.to_f.round(places)}}
+                        ]
+                      }
+                    }
+                  ]
+                },
                 "default_graphs"=> [
                   {
                     "type"          => "Qonfig::Analytics::Graph",
