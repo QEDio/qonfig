@@ -60,13 +60,13 @@ module Qonfig
                           {"Käuferportal" => "Selbstwerbung - KP"}
                         ],
                         "value_functions" => [
-                          {:lambda => lambda{|str| str.capitalize}}
+                          {:lambda => 'lambda{|str| str.capitalize}'}
                         ]
                       },
                       "key"       => "CR",
                       "values"   => {
                         "functions" => [
-                          {:lambda => lambda {|number,places=1| "%.#{places}f" % number.to_f.round(places)}}
+                          {:lambda => 'lambda {|number,places=1| "%.#{places}f" % number.to_f.round(places)}'}
                         ]
                       }
                     }
