@@ -20,7 +20,19 @@ module Qonfig
       def get_format( ext_options = {} )
         options     = {}.merge(ext_options)
 
-        formats.select{|f| f.match?( options )}
+        fs = formats.select{|f| f.match?( options )}
+
+        if( options[:return_first] )
+          fs = fs.first
+        end
+
+        return fs
+      end
+
+      def default_get_format_options
+        {
+          :return_first     => true
+        }
       end
 
       def set_data_source( data_source )
