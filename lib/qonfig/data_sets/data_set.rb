@@ -17,6 +17,12 @@ module Qonfig
         }
       end
 
+      def get_format( ext_options = {} )
+        options     = {}.merge(ext_options)
+
+        formats.select{|f| f.match?( options )}
+      end
+
       def set_data_source( data_source )
         @data_source = data_source
       end

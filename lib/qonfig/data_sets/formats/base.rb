@@ -23,12 +23,6 @@ module Qonfig
           }
         end
 
-        def match?( ext_options = {} )
-          options         = ext_options
-
-          (key.eql?(options[:key]) && value.eql?(options[:value]))
-        end
-
         def serializable_hash
           {
             :key                => key,
@@ -38,6 +32,12 @@ module Qonfig
             :value_mappings     => value_mappings,
             :value_functions    => value_functions
           }.delete_if{|k,v|v.blank?}
+        end
+
+        def match?( ext_options = {} )
+          options         = ext_options
+
+          (key.eql?(options[:key]) && value.eql?(options[:value]))
         end
 
         def eql?(other)

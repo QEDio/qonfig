@@ -39,8 +39,11 @@ module Qonfig
           }
         end
 
-        def match?(ext_options = {})
+        def match?( ext_options = {} )
           options             = default_match_options.merge(ext_options||{})
+
+          row.match?(:key => options[:row_key], :value => options[:row_value]) &&
+            column.match?( :key => options[:column_key], :value => options[:column_value] )
         end
 
         def default_match_options
