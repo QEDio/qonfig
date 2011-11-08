@@ -63,7 +63,7 @@ module Qonfig
                       "column"    => {
                         "key"             => "campaign_product",
                         "key_mapping"     => "Produkt",
-                        "value_mapping"   => {"solaranlagen" => "pupsanlagen", "garagen" => "superdings"},
+                        "value_mappings"  => {"solaranlagen" => "pupsanlagen", "garagen" => "superdings"},
                         "value_functions" => [
                           {"lambda" => 'lambda{|str| str.capitalize}'}
                         ]
