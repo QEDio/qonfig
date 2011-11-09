@@ -68,6 +68,16 @@ module Qonfig
                           {"lambda" => 'lambda{|str| str.capitalize}'}
                         ]
                       }
+                    },
+                    {
+                      "row"       => {
+                        "key"     => "campaign_product",
+                        "value"   => "wasserspender",
+                      },
+                      "column"    => {
+                        "key"             => "impressions",
+                        "value_mappings"  => {"0" => "##FUCK##"},
+                      }
                     }
                   ]
                 },
