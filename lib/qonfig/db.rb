@@ -80,7 +80,7 @@ module Qonfig
                     "column_value"  => "",
                     "name"          => "Conversions",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid", "warn_uuid"],
+                    "order"         => ["error_uuid", "warn_uuid", "ok_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
