@@ -20,22 +20,21 @@ module Qonfig
                 "data_set"      => {
                   "format" => [
                     {
-                      "row"       => {
-                      },
                       "column"    => {
                         "key"             => "cr",
                         "key_mapping"     => "CR",
-                        "value_mapping"   => [
-                          {"Käuferportal" => "Selbstwerbung - KP"}
-                        ],
                         "value_functions" => [
-                          {:lambda => 'lambda{|str| str.capitalize}'}
+                          {"lambda" => 'lambda {|number,places=1| "%.#{places}f" % number.to_f.round(places)}'}
                         ]
-                      },
-                      "key"       => "CR",
-                      "values"   => {
-                        "functions" => [
-                          {:lambda => 'lambda {|number,places=1| "%.#{places}f" % number.to_f.round(places)}'}
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "campaign_product",
+                        "key_mapping"     => "Produkt",
+                        "value_mappings"  => {"solaranlagen" => "pupsanlagen", "garagen" => "superdings"},
+                        "value_functions" => [
+                          {"lambda" => 'lambda{|str| str.capitalize}'}
                         ]
                       }
                     }
