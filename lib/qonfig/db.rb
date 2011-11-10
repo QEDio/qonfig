@@ -101,7 +101,9 @@ module Qonfig
                         "deviation_type"                  => "sd",
                         "number_of_values_moving_average" => 10,
                         "name"                            => "error",
-                        "uuid"                            => "error_uuid"
+                        "uuid"                            => "error_uuid",
+                        "above"                           => "green",
+                        "below"                           => "red"
                       }
                     ]
                   }

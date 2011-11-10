@@ -43,7 +43,7 @@ module Qonfig
         f             = functions
 
         if( options.key?(:uuid) )
-          f = functions[:uuid]
+          f = functions[options[:uuid]]
         end
 
         return f

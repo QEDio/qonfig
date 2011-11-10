@@ -7,11 +7,10 @@ module Qonfig
   module Analytics
     module Functions
       class Base
-        attr_accessor     :color, :periodicity, :name
+        attr_accessor     :color, :periodicity, :name, :external_data, :above, :below
         attr_writer       :uuid
         attr_reader       :type
         attr_reader       :configurable_attributes
-        attr_accessor     :external_data
 
         def initialize( ext_params = {} )
           params = default_params.merge(ext_params)
@@ -24,6 +23,8 @@ module Qonfig
           @periodicity                  = params[:periodicity]
           @name                         = params[:name]
           @configurable_attributes      = params[:configurable_attributes]
+          @above                        = params[:above]
+          @below                        = params[:below]
 
         end
 
@@ -49,8 +50,10 @@ module Qonfig
             :periodicity                => periodicity,
             :name                       => name,
             :configurable_attributes    => configurable_attributes,
-            :external_data              => external_data
-          }
+            :external_data              => external_data,
+            :above                      => above,
+            :below                      => below
+          }.delete_if{|k,v|v.nil?}
         end
 
         def eql?(other)
