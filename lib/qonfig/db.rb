@@ -97,7 +97,7 @@ module Qonfig
                       },
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
-                        "color"                           => "#ff0000",
+                        "color"                           => "#f7cc3e",
                         "periodicity"                     => "daily",
                         "deviation_factor"                => 2,
                         "deviation_type"                  => "sd",
@@ -109,7 +109,7 @@ module Qonfig
                       },
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
-                        "color"                           => "#ff0000",
+                        "color"                           => "#25d934",
                         "periodicity"                     => "daily",
                         "deviation_factor"                => 1,
                         "deviation_type"                  => "sd",
