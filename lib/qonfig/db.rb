@@ -102,8 +102,9 @@ module Qonfig
                         "number_of_values_moving_average" => 10,
                         "name"                            => "error",
                         "uuid"                            => "error_uuid",
-                        "above"                           => "green",
-                        "below"                           => "red"
+                        "above"                           => "red",
+                        "below"                           => "green",
+                        "with_color"                      => false
                       },
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
@@ -114,8 +115,20 @@ module Qonfig
                         "number_of_values_moving_average" => 10,
                         "name"                            => "warn",
                         "uuid"                            => "warn_uuid",
-                        "above"                           => "green",
-                        "below"                           => "red"
+                        "above"                           => "bielig_top",
+                        "below"                           => "bielig_bottom"
+                      },
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 1,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "ok",
+                        "uuid"                            => "ok_uuid",
+                        "above"                           => "bielig_top",
+                        "below"                           => "bielig_bottom"
                       }
                     ]
                   }
@@ -272,106 +285,6 @@ module Qonfig
                 ]
               }
             ]
-          }
-        }
-      }
-    end
-    
-    def self.data1
-      {
-        "kp" => {
-          "early_warning" => {
-            "analytics" => {
-                
-
-              "rows"  => {
-
-                "campaign_product" => {
-                  "solaranlagen" => {
-                    "columns" => {
-                      "cr" => {
-                        "functions" => {
-                          "order" => {
-
-                          },
-                          "arr" => [
-                            "alert" => {
-                              "type"         => "bollinger",
-                              "factor"       => 1,
-                              "nr_values"    => 10
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "defaults" => {
-                "columns" => {
-                  "clicks" => {
-                    "alert" => {
-                      "factor"       => 3,
-                      "nr_values"    => 10
-                    },
-                    "warn" => {
-                      "factor"       => 2,
-                      "nr_values"    => 10
-                    }
-                  },
-                  "cpa" => {
-                    "alert" => {
-                      "factor"       => 3,
-                      "nr_values"    => 10
-                    },
-                    "warn" => {
-                      "factor"       => 2,
-                      "nr_values"    => 10
-                    }
-                  },
-                  "impressions" => {
-                    "alert" => {
-                      "factor"       => 3,
-                      "nr_values"    => 10
-                    },
-                    "warn" => {
-                      "factor"       => 2,
-                      "nr_values"    => 10
-                    }
-                  },
-                  "cost" => {
-                    "alert" => {
-                      "factor"       => 3,
-                      "nr_values"    => 10
-                    },
-                    "warn" => {
-                      "factor"       => 2,
-                      "nr_values"    => 10
-                    }
-                  },
-                  "conversions" => {
-                    "alert" => {
-                      "factor"       => 3,
-                      "nr_values"    => 10
-                    },
-                    "warn" => {
-                      "factor"       => 2,
-                      "nr_values"    => 10
-                    }
-                  },
-                  "cr" => {
-                    "alert" => {
-                      "factor"       => 3,
-                      "nr_values"    => 10
-                    },
-                    "warn" => {
-                      "factor"       => 2,
-                      "nr_values"    => 10
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }

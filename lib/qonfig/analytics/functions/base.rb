@@ -7,7 +7,7 @@ module Qonfig
   module Analytics
     module Functions
       class Base
-        attr_accessor     :color, :periodicity, :name, :external_data, :above, :below
+        attr_accessor     :color, :periodicity, :name, :external_data, :above, :below, :with_color
         attr_writer       :uuid
         attr_reader       :type
         attr_reader       :configurable_attributes
@@ -25,7 +25,7 @@ module Qonfig
           @configurable_attributes      = params[:configurable_attributes]
           @above                        = params[:above]
           @below                        = params[:below]
-
+          @with_color                   = params[:with_color]
         end
 
         def default_params
@@ -34,7 +34,8 @@ module Qonfig
             :periodicity                  => nil,
             :name                         => nil,
             :configurable_attributes      => [],
-            :external_data                => {}
+            :external_data                => {},
+            :with_color                   => true
           }
         end
 
@@ -52,7 +53,8 @@ module Qonfig
             :configurable_attributes    => configurable_attributes,
             :external_data              => external_data,
             :above                      => above,
-            :below                      => below
+            :below                      => below,
+            :with_color                 => with_color
           }.delete_if{|k,v|v.nil?}
         end
 
