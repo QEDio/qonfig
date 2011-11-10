@@ -38,6 +38,17 @@ module Qonfig
         @uuid ||= UUID.new.generate(:compact)
       end
 
+      def function(ext_options = {})
+        options       = {}.merge(ext_options||{})
+        f             = functions
+
+        if( options.key?(:uuid) )
+          f = functions[:uuid]
+        end
+
+        return f
+      end
+
       def add_functions( functions, ext_options = {} )
         options = default_add_functions_options.merge(ext_options)
         Array(functions).each do |function|
