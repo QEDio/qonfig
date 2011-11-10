@@ -91,7 +91,7 @@ module Qonfig
                     "column_value"  => "",
                     "name"          => "Conversions",
                     "description"   => "For something big",
-                    "order"         => ["error_uuid"],
+                    "order"         => ["error_uuid, warn_uuid"],
                     "functions"     => [
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
@@ -102,6 +102,18 @@ module Qonfig
                         "number_of_values_moving_average" => 10,
                         "name"                            => "error",
                         "uuid"                            => "error_uuid",
+                        "above"                           => "green",
+                        "below"                           => "red"
+                      },
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 2,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "warn",
+                        "uuid"                            => "warn_uuid",
                         "above"                           => "green",
                         "below"                           => "red"
                       }
