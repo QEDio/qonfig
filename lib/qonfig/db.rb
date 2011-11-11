@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 module Qonfig
   class Db
     attr_reader :data
@@ -13,11 +14,7 @@ module Qonfig
       conf = data[options[:user]]
 
       if( conf && options[:view] )
-        conf = conf[options[:view]]
-
-        if( conf && options[:function] )
-          conf = conf[options[:function]]
-        end
+        conf = Qonfig::Factory.build(conf[options[:view]].symbolize_keys_rec)
       end
 
       return conf
@@ -34,109 +31,249 @@ module Qonfig
 
       }
     end
-    
+
     def self.data
       {
         "kp" => {
           "early_warning" => {
-            "analytics" => {
-              "bollinger" => {
-                "order" => {
-                  "alert" => 1,
-                  "warn" => 2
-                },
-                "rows"  => {
-                  "campaign_product" => {
-                    "solaranlagen" => {
-                      "columns" => {
-                        "cr" => {
-                          "alert" => {
-                            "factor"       => 1,
-                            "nr_values"    => 10
-                          }
-                        }
+            "type"         => "Qonfig::Views::View",
+            "uuid"         => "views_view_uuid",
+            "name"         => "Early Warning",
+            "description"  => "With early warning you can do nothing wrong!",
+            "order"        => ["views_partial_uuid_1"],
+            "partials"     => [
+              {
+                "type"          => "Qonfig::Views::Partial",
+                "uuid"          => "views_partial_uuid_1",
+                "name"          => "Adwords",
+                "description"   => "Data form Google Adwords to show the way!",
+                "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
+                "data_set"      => {
+                  "format" => [
+                    {
+                      "column"    => {
+                        "key"             => "cr",
+                        "key_mapping"     => "CR",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number,places=1| "%.#{places}f" % number.to_f.round(places)}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "campaign_product",
+                        "key_mapping"     => "Produkt",
+                        "value_functions" => [
+                          {"lambda" => 'lambda{|str| str.capitalize}'}
+                        ]
                       }
                     }
-                  }
+                  ]
                 },
-                "defaults" => {
-                  "columns" => {
-                    "clicks" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10,
-                        "color"        => "#a00"
+                "default_graphs"=> [
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "default_graph_uuid_1",
+                    "row_key"       => nil,
+                    "row_value"     => nil,
+                    "column_key"    => nil,
+                    "column_value"  => "",
+                    "name"          => "Conversions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid", "ok_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid",
+                        "above"                           => "red",
+                        "below"                           => "green",
+                        "with_color"                      => false
                       },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10,
-                        "color"        => "#FFA500"
-                      }
-                    },
-                    "cpa" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10,
-                        "color"        => "#a00"
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#f7cc3e",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 2,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "warn",
+                        "uuid"                            => "warn_uuid",
+                        "above"                           => "bielig_top",
+                        "below"                           => "bielig_bottom"
                       },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10,
-                        "color"        => "#FFA500"
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#25d934",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 1,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "ok",
+                        "uuid"                            => "ok_uuid",
+                        "above"                           => "bielig_top",
+                        "below"                           => "bielig_bottom"
                       }
-                    },
-                    "impressions" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10,
-                        "color"        => "#a00"
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10,
-                        "color"        => "#FFA500"
-                      }
-                    },
-                    "cost" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10,
-                        "color"        => "#a00"
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10,
-                        "color"        => "#FFA500"
-                      }
-                    },
-                    "conversions" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10,
-                        "color"        => "#a00"
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10,
-                        "color"        => "#FFA500"
-                      }
-                    },
-                    "cr" => {
-                      "alert" => {
-                        "factor"       => 3,
-                        "nr_values"    => 10,
-                        "color"        => "#a00"
-                      },
-                      "warn" => {
-                        "factor"       => 2,
-                        "nr_values"    => 10,
-                        "color"        => "#FFA500"
-                      }
-                    }
+                    ]
                   }
-                }
+                ],
+                "graphs"        => [
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "graph_uuid_1",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "conversions",
+                    "column_value"  => "",
+                    "name"          => "Conversions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid", "warn_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      },
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#f0a313",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 2,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "warn",
+                        "uuid"                            => "warn_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "graph_uuid_2",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "cost",
+                    "column_value"  => "",
+                    "name"          => "Cost",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "graph_uuid_3",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "impressions",
+                    "column_value"  => "",
+                    "name"          => "Impressions",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "graph_uuid_4",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "cr",
+                    "column_value"  => "",
+                    "name"          => "CR",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "graph_uuid_5",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "cpa",
+                    "column_value"  => "",
+                    "name"          => "CPA",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  },
+                  {
+                    "type"          => "Qonfig::Analytics::Graph",
+                    "uuid"          => "graph_uuid_6",
+                    "row_key"       => "campaign_product",
+                    "row_value"     => "solaranlagen",
+                    "column_key"    => "clicks",
+                    "column_value"  => "",
+                    "name"          => "Clicks",
+                    "description"   => "For something big",
+                    "order"         => ["error_uuid"],
+                    "functions"     => [
+                      {
+                        "type"                            => "Qonfig::Analytics::Functions::Bollinger",
+                        "color"                           => "#ff0000",
+                        "periodicity"                     => "daily",
+                        "deviation_factor"                => 3,
+                        "deviation_type"                  => "sd",
+                        "number_of_values_moving_average" => 10,
+                        "name"                            => "error",
+                        "uuid"                            => "error_uuid"
+                      }
+                    ]
+                  }
+                ]
               }
-            }
+            ]
           }
         }
       }

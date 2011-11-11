@@ -1,0 +1,1 @@
+require 'qonfig/adapters/serializable_hash'
