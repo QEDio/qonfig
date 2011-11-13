@@ -55,7 +55,7 @@ module Qonfig
         if( graph.is_a?(Hash) )
           raise Exception.new("Need an uuid") if graph[:uuid].blank?
           options[:add_to][graph[:uuid]] = Analytics::Graph.new(graph)
-        elsif( graph.is_a?(Partial) )
+        elsif( graph.is_a?(Graph) )
           options[:add_to][graph.uuid] = graph
         end
       end
@@ -77,7 +77,7 @@ module Qonfig
           if( graph.nil? && default.nil? )
             graph = Analytics::Graph.new
           elsif graph.nil?
-            graph = Analytics::Graph.new(default.serializable_hash)
+            graph = Analytics::Graph.new(default.serializable_hash.merge({:uuid => nil}))
           else
             graph = graph.merge(default)
           end
@@ -119,6 +119,7 @@ module Qonfig
         end
 
         graph.set_functions(new_functions)
+        add_graph(graph)
       end
 
       def get_default_graph(ext_options = {})

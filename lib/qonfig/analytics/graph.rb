@@ -109,12 +109,6 @@ module Qonfig
         }
       end
 
-      def update_functions(functions, ext_options = {} )
-        # remove default functions
-
-
-      end
-
       def merge(other)
         raise Exception.new("Needs to be of type: #{self.class}, but is: #{other.class}") unless self.class.eql?(other.class)
 
