@@ -107,7 +107,7 @@ module Qonfig
             if( def_function.present? )
               if( def_function.color != function.color || def_function.periodicity != function.periodicity ||
                   def_function.deviation_factor != function.deviation_factor ||
-                  def_function.number_values_moving_average != function.number_values_moving_average )
+                  def_function.number_of_values_moving_average != function.number_of_values_moving_average )
                 new_functions << function
               end
             else
