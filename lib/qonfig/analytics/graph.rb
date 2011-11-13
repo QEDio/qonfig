@@ -46,7 +46,7 @@ module Qonfig
         elsif( options.key?(:name) )
           f = functions.select{|k,func| func.name.eql?(options[:name])}.first
 
-          f = f[0] if( f )
+          f = f[1] if( f )
         end
 
         return f
