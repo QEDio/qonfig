@@ -44,9 +44,10 @@ module Qonfig
         if( options.key?(:uuid) )
           f = functions[options[:uuid]]
         elsif( options.key?(:name) )
-          f = functions.select{|k,func| func.name.eql?(options[:name])}
-        end
+          f = functions.select{|k,func| func.name.eql?(options[:name])}.first
 
+          f = f[0] if( f )
+        end
 
         return f
       end
