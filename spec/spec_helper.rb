@@ -49,11 +49,14 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'qonfig'
 require 'rspec'
 require 'simplecov'
+require 'factory_girl'
+Factory.find_definitions
+
 
 require 'fixtures/fixtures'
 
 SimpleCov.start
 
 RSpec.configure do |config|
-
+  config.include Factory::Syntax::Methods
 end

@@ -21,13 +21,13 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   s.add_runtime_dependency 'activesupport'
   # require 'active_support/core_ext/string/inflections' has a dependency to ithtop
-  s.add_runtime_dependency('i18n')
+  s.add_runtime_dependency 'i18n'
   s.add_runtime_dependency 'uuid'
 
-
-  s.add_development_dependency('turn')
-  s.add_development_dependency('rspec')
-  s.add_development_dependency('spork')
-  s.add_development_dependency('spork-testunit')
-  s.add_development_dependency('simplecov')
+  s.add_development_dependency 'turn'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'spork'
+  s.add_development_dependency 'spork-testunit'
+  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'factory_girl'
 end
