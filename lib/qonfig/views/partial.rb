@@ -55,7 +55,7 @@ module Qonfig
         if( graph.is_a?(Hash) )
           raise Exception.new("Need an uuid") if graph[:uuid].blank?
           options[:add_to][graph[:uuid]] = Analytics::Graph.new(graph)
-        elsif( graph.is_a?(Graph) )
+        elsif( graph.is_a?(Analytics::Graph) )
           options[:add_to][graph.uuid] = graph
         end
       end
