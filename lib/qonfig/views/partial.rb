@@ -77,7 +77,7 @@ module Qonfig
           if( graph.nil? && default.nil? )
             graph = Analytics::Graph.new
           elsif graph.nil?
-            graph = default
+            graph = Analytics::Graph.new(default.serializable_hash)
           else
             graph = graph.merge(default)
           end
