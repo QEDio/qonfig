@@ -126,6 +126,7 @@ module Qonfig
         end
 
         graph.set_functions(new_functions)
+        graph.order = new_functions.map{|f|f.uuid}
         add_graph(graph)
       end
 
