@@ -68,6 +68,21 @@ module Qonfig
                         ]
                       }
                     }
+                  ],
+                  "sorting" => [
+                    {
+                      "horizontal" => {
+                        "key"   => "conversions",
+                        "order" => [
+                          {
+                            "key" => "conversions",
+                            "functions" => [
+                              {"lambda" => 'lambda{|n1,n2| n2 <=> n1}'}
+                            ]
+                          }
+                        ]
+                      }
+                    }
                   ]
                 },
                 "default_graphs"=> [
