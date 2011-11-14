@@ -125,6 +125,9 @@ module Qonfig
           new_functions   = []
         end
 
+        # since merging is not really working on a function level, set all functions here
+        new_functions = options[:functions] if new_functions.present?
+
         graph.set_functions(new_functions)
         graph.order = new_functions.map{|f|f.uuid}
         add_graph(graph)
