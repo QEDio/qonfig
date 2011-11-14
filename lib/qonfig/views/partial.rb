@@ -55,7 +55,7 @@ module Qonfig
         if( graph.is_a?(Hash) )
           raise Exception.new("Need an uuid") if graph[:uuid].blank?
           options[:add_to][graph[:uuid]] = Analytics::Graph.new(graph)
-        elsif( graph.is_a?(Partial) )
+        elsif( graph.is_a?(Analytics::Graph) )
           options[:add_to][graph.uuid] = graph
         end
       end
@@ -77,7 +77,14 @@ module Qonfig
           if( graph.nil? && default.nil? )
             graph = Analytics::Graph.new
           elsif graph.nil?
-            graph = default
+            graph = Analytics::Graph.new(default.serializable_hash.merge(
+                  {
+                    :uuid         => nil,
+                    :row_key      => options[:row_key],
+                    :row_value    => options[:row_value],
+                    :column_key   => options[:column_key]
+                  }
+                ))
           else
             graph = graph.merge(default)
           end
@@ -94,8 +101,47 @@ module Qonfig
         }
       end
 
+      def update_graph(graph, ext_options = {})
+        options           = {}.merge(ext_options)
+        default           = get_default_graph(options.merge({:graph => graph}))
+        new_functions     = []
+
+        # find not default functions
+        if( options[:functions].size > 0 )
+          options[:functions].each do |function|
+            def_function      = default.function( :name => function.name )
+
+            if( def_function.present? )
+              if( def_function.color != function.color || def_function.periodicity != function.periodicity ||
+                  def_function.deviation_factor != function.deviation_factor ||
+                  def_function.number_of_values_moving_average != function.number_of_values_moving_average )
+                new_functions << function
+              end
+            else
+              new_functions << function
+            end
+          end
+        else
+          new_functions   = []
+        end
+
+        graph.set_functions(new_functions)
+        graph.order = new_functions.map{|f|f.uuid}
+        add_graph(graph)
+      end
+
       def get_default_graph(ext_options = {})
-        options       = {:default_matching => true}.merge(ext_options)
+        if( ext_options.key?(:graph) )
+          graph         = ext_options.delete(:graph)
+          options       = {
+            :default_matching => true,
+            :row_key          => graph.row_key,
+            :row_value        => graph.row_value,
+            :column_key       => graph.column_key
+          }.merge(ext_options)
+        else
+          options       = {:default_matching => true}.merge(ext_options)
+        end
         get_the_graph( default_graphs, options )
       end
 

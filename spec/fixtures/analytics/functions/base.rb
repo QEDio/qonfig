@@ -9,6 +9,7 @@ module Qonfig
             COLOR             = "#00000"
             NAME              = "name"
             UUID              = "base_uuid"
+            WITH_COLOR        = true
 
             DEFAULT_TYPE              = "default type"
             DEFAULT_PERIODICITY       = "daily"

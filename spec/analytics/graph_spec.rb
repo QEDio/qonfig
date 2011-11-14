@@ -41,8 +41,20 @@ describe Qonfig::Analytics::Graph do
         graph.name.should                       == ANALYTICS_GRAPH_NAME_1
         graph.description.should                == ANALYTICS_GRAPH_DESCRIPTION_1
         graph.order.should                      == ANALYTICS_GRAPH_ORDER_1
+
         graph.serializable_functions.should     == ANALYTICS_GRAPH_FUNCTIONS_1
       end
     end
+
+    context "checking the higher functions" do
+      let(:graph) do
+        build(:graph)
+      end
+
+      it "should bla" do
+        #pp graph
+      end
+    end
+    
   end
 end

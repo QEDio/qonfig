@@ -2,8 +2,8 @@ module Qonfig
   module Analytics
     module Functions
       class Bollinger < Base
-        attr_accessor :deviation_factor, :deviation_type
-        attr_accessor :number_of_values_moving_average
+        attr_accessor :deviation_type
+        attr_reader :number_of_values_moving_average, :deviation_factor
 
         DEFAULT_DEVIATION_FACTOR                      = 1
         DEFAULT_DEVIATION_TYPE                        = "sd"
@@ -24,6 +24,15 @@ module Qonfig
             :type                               => self.class
           }
         end
+
+        def number_of_values_moving_average=(value)
+          @number_of_values_moving_average = value.to_i
+        end
+
+        def deviation_factor=(factor)
+          @deviation_factor = factor.to_f
+        end
+
 
         def default_params_weak
           {

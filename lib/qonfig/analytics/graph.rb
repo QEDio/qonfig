@@ -23,8 +23,7 @@ module Qonfig
         @description    = params[:description]
         @order          = params[:order]
 
-        @functions      = {}
-        add_functions(params[:functions])
+        set_functions(params[:functions])
       end
 
       def default_params
@@ -44,9 +43,18 @@ module Qonfig
 
         if( options.key?(:uuid) )
           f = functions[options[:uuid]]
+        elsif( options.key?(:name) )
+          f = functions.select{|k,func| func.name.eql?(options[:name])}.first
+
+          f = f[1] if( f )
         end
 
         return f
+      end
+
+      def set_functions( functions, ext_options = {} )
+        @functions        = {}
+        add_functions(functions, ext_options)
       end
 
       def add_functions( functions, ext_options = {} )
@@ -69,13 +77,15 @@ module Qonfig
 
         if( function.is_a?(Hash) )
           raise Exception.new("Need uuid for function") if function[:uuid].nil?
+          uuid = function[:uuid]
         elsif( function.is_a?(Qonfig::Analytics::Functions::Base) )
           raise Exception.new("Need uuid for function") if function.uuid.nil?
+          uuid = function.uuid
         else
           raise Exception.new("Don't know how to convert #{function.class} into a function-object")
         end
 
-        uuid = function[:uuid]
+
         factory_function = Qonfig::Analytics::Functions::Factory.build( function )
 
         if( @functions[uuid].present? )

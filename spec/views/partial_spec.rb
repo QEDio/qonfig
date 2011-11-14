@@ -100,4 +100,22 @@ describe Qonfig::Views::Partial do
       graph.serializable_functions.should == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1[:functions]
     end
   end
+
+  context "updating part of a graph" do
+    let(:partial) do
+      Qonfig::Views::Partial.new(VIEWS_PARTIAL_SERIALIZED_HASH_1)
+    end
+
+    it "should replace the old functions" do
+      graph = partial.graphs.to_a[0][1]
+      #pp graph
+      b = [build(:bollinger)]
+      f = graph.functions.map{|k,v|v}
+      pp f
+      partial.update_graph(graph, :functions => graph.functions.map{|k,v|v})
+      #partial.update_graph(graph, :functions => b)
+      #partial.update_graph(graph, :functions => b)
+      #pp graph
+    end
+  end
 end
