@@ -14,9 +14,9 @@ module Qonfig
           params = default_params_weak.merge(ext_params).merge(default_params_strong)
           super(params)
 
-          @deviation_factor                   = params[:deviation_factor]
-          @deviation_type                     = params[:deviation_type]
-          @number_of_values_moving_average    = params[:number_of_values_moving_average]
+          @deviation_type                          = params[:deviation_type]
+          self.deviation_factor                    = params[:deviation_factor]
+          self.number_of_values_moving_average     = params[:number_of_values_moving_average]
         end
 
         def default_params_strong
