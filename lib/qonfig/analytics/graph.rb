@@ -7,21 +7,19 @@ require 'active_support/core_ext/object/blank'
 module Qonfig
   module Analytics
     class Graph
+      include Qonfig::Modules::Id
+      
       attr_accessor :name, :description
-      attr_accessor :row_key, :row_value, :column_key, :column_value
       attr_accessor :functions, :order
-      attr_writer :uuid
 
       def initialize(ext_params = {})
         params          = default_params.merge(ext_params)
         @uuid           = params[:uuid]
-        @row_key        = params[:row_key]
-        @row_value      = params[:row_value]
-        @column_key     = params[:column_key]
-        @column_value   = params[:column_value]
         @name           = params[:name]
         @description    = params[:description]
         @order          = params[:order]
+
+        self.keys       = params[:keys]
 
         set_functions(params[:functions])
       end
@@ -31,10 +29,6 @@ module Qonfig
           :functions    => [], # functions are provided externally as array, but stored internally in a hash
           :order        => []
         }
-      end
-
-      def uuid
-        @uuid ||= UUID.new.generate(:compact)
       end
 
       def function(ext_options = {})
@@ -85,7 +79,6 @@ module Qonfig
           raise Exception.new("Don't know how to convert #{function.class} into a function-object")
         end
 
-
         factory_function = Qonfig::Analytics::Functions::Factory.build( function )
 
         if( @functions[uuid].present? )
@@ -123,16 +116,13 @@ module Qonfig
       def serializable_hash
         {
           :uuid             => uuid,
+          :keys             => keys,
           :name             => name,
           :description      => description,
-          :row_key          => row_key,
-          :row_value        => row_value,
-          :column_key       => column_key,
-          :column_value     => column_value,
           :functions        => serializable_functions,
           :order            => order,
           :type             => self.class.to_s
-        }.delete_if{|k,v|v.nil?}
+        }.delete_if{|k,v|v.blank?}
       end
 
       def serializable_functions

@@ -1,14 +1,15 @@
 # -*- encoding: utf-8 -*-
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/object/blank'
-require 'uuid'
+require 'qonfig/modules/id'
 
 module Qonfig
   module Analytics
     module Functions
       class Base
+        include Qonfig::Modules::Id
+
         attr_accessor     :color, :periodicity, :name, :external_data, :above, :below, :with_color
-        attr_writer       :uuid
         attr_reader       :type
         attr_reader       :configurable_attributes
 
@@ -26,6 +27,7 @@ module Qonfig
           @above                        = params[:above]
           @below                        = params[:below]
           @with_color                   = params[:with_color]
+          self.keys                     = params[:keys]
         end
 
         def default_params
@@ -39,10 +41,6 @@ module Qonfig
           }
         end
 
-        def uuid
-          @uuid ||= UUID.new.generate(:compact)
-        end
-
         def serializable_hash
           {
             :uuid                       => uuid,
@@ -54,8 +52,9 @@ module Qonfig
             :external_data              => external_data,
             :above                      => above,
             :below                      => below,
-            :with_color                 => with_color
-          }.delete_if{|k,v|v.nil?}
+            :with_color                 => with_color,
+            :keys                       => keys
+          }.delete_if{|k,v|v.blank?}
         end
 
         def eql?(other)

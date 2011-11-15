@@ -42,32 +42,30 @@ describe Qonfig::Views::Partial do
 
   context "testing its default matching capabilities" do
     let(:partial) do
-      Qonfig::Views::Partial.new(VIEWS_PARTIAL_DEFAULT_SERIALIZED_HASH_1)
+      @partial_hsh = Marshal.load(Marshal.dump(VIEWS_PARTIAL_DEFAULT_SERIALIZED_HASH_1))
+      Qonfig::Views::Partial.new(@partial_hsh)
     end
 
-    it "should return the default graph for no key at all" do
-      partial.get_graph.
-        serializable_hash.should                  == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1
-    end
+    it "should return the default graph for differnt keys" do
+      [ [ANALYTICS_GRAPH_DEFAULT_KEYS_1, ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1],
+        [ANALYTICS_GRAPH_DEFAULT_KEYS_2, ANALYTICS_DEFAULT_GRAPH_ROW_KEY_SERIALIZED_HASH_1],
+        [ANALYTICS_GRAPH_DEFAULT_KEYS_3, ANALYTICS_DEFAULT_GRAPH_ROW_KEY_ROW_VALUE_SERIALIZED_HASH_1],
+        [ANALYTICS_GRAPH_DEFAULT_KEYS_4, ANALYTICS_DEFAULT_GRAPH_ROW_KEY_ROW_VALUE_COLUMN_KEY_SERIALIZED_HASH_1]].each do |keys|
 
-    it "should return the default graph for row_key" do
-      partial.get_graph(:row_key => ANALYTICS_GRAPH_DEFAULT_ROW_KEY_2).
-        serializable_hash.should == ANALYTICS_DEFAULT_GRAPH_ROW_KEY_SERIALIZED_HASH_1
-    end
+        key = keys[0]
+        default_hsh = Marshal.load(Marshal.dump(keys[1]))
 
-    it "should return the default graph for row_key and row_value" do
-      partial.get_graph(
-        :row_key        => ANALYTICS_GRAPH_DEFAULT_ROW_KEY_3,
-        :row_value      => ANALYTICS_GRAPH_DEFAULT_ROW_VALUE_3
-      ).serializable_hash.should == ANALYTICS_DEFAULT_GRAPH_ROW_KEY_ROW_VALUE_SERIALIZED_HASH_1
-    end
+        graph       = partial.get_graph(:keys => key)
 
-    it "should return the default graph for row_key, row_value and column_key" do
-      partial.get_graph(
-        :row_key        => ANALYTICS_GRAPH_DEFAULT_ROW_KEY_4,
-        :row_value      => ANALYTICS_GRAPH_DEFAULT_ROW_VALUE_4,
-        :column_key     => ANALYTICS_GRAPH_DEFAULT_COLUMN_KEY_4
-      ).serializable_hash.should == ANALYTICS_DEFAULT_GRAPH_ROW_KEY_ROW_VALUE_COLUMN_KEY_SERIALIZED_HASH_1
+        # the uuid should be different, since we return a new graph object if only a default graph was found
+        graph.uuid.should_not                       == @partial_hsh[:uuid]
+        graph.uuid.should_not                       == default_hsh.delete(:uuid)
+
+        # serialize graph, remove uuid
+        serialized_graph = graph.serializable_hash
+        serialized_graph.delete(:uuid)
+        serialized_graph.should                     == default_hsh
+      end
     end
   end
 
@@ -77,11 +75,11 @@ describe Qonfig::Views::Partial do
     end
 
     it "should return the merged contents of the matching default config and graph config" do
-      graph = partial.get_graph(
-        :row_key      => ANALYTICS_GRAPH_ROW_KEY_1,
-        :row_value    => ANALYTICS_GRAPH_ROW_VALUE_1,
-        :column_key   => ANALYTICS_GRAPH_COLUMN_KEY_1,
-        :with_defaults=> true
+      graph = partial.get_graph( :keys=> {
+          :row_key      => ANALYTICS_GRAPH_ROW_KEY_1,
+          :row_value    => ANALYTICS_GRAPH_ROW_VALUE_1,
+          :column_key   => ANALYTICS_GRAPH_COLUMN_KEY_1
+        }
       )
       
       graph.serializable_hash.should_not  == ANALYTICS_GRAPH_SERIALIZED_HASH_3
@@ -90,9 +88,7 @@ describe Qonfig::Views::Partial do
       ####### fine checking,
       #### from configured graph
       graph.uuid.should                   == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:uuid]
-      graph.row_key.should                == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:row_key]
-      graph.row_value.should              == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:row_value]
-      graph.column_key.should             == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:column_key]
+      graph.keys.should                   == ANALYTICS_GRAPH_SERIALIZED_HASH_3[:keys]
 
       #### from default graph
       graph.name.should                   == ANALYTICS_DEFAULT_GRAPH_NO_KEYS_SERIALIZED_HASH_1[:name]
@@ -111,7 +107,7 @@ describe Qonfig::Views::Partial do
       #pp graph
       b = [build(:bollinger)]
       f = graph.functions.map{|k,v|v}
-      pp f
+      #pp f
       partial.update_graph(graph, :functions => graph.functions.map{|k,v|v})
       #partial.update_graph(graph, :functions => b)
       #partial.update_graph(graph, :functions => b)

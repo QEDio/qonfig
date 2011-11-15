@@ -80,9 +80,7 @@ module Qonfig
             graph = Analytics::Graph.new(default.serializable_hash.merge(
                   {
                     :uuid         => nil,
-                    :row_key      => options[:row_key],
-                    :row_value    => options[:row_value],
-                    :column_key   => options[:column_key]
+                    :keys         => options[:keys]
                   }
                 ))
           else
@@ -137,13 +135,12 @@ module Qonfig
           graph         = ext_options.delete(:graph)
           options       = {
             :default_matching => true,
-            :row_key          => graph.row_key,
-            :row_value        => graph.row_value,
-            :column_key       => graph.column_key
+            :keys             => graph.keys
           }.merge(ext_options)
         else
           options       = {:default_matching => true}.merge(ext_options)
         end
+
         get_the_graph( default_graphs, options )
       end
 
@@ -178,13 +175,19 @@ module Qonfig
             graph = get_graph_int( data, options )
           # fuzzy matching for default config
           else
-            options[:search_order].each do |order|
-              search_hsh  = {}
-              order.each{|o| search_hsh[o] = options[o]}
+            keys = options[:keys]
 
-              graph = get_graph_int( data, search_hsh )
-  
-              break if graph.present?
+            if( keys.present? )
+              options[:search_order].each do |order|
+                search_keys = {}
+                order.each{|o| search_keys[o] = keys[o]}
+
+                graph = get_graph_int( data, {:keys => search_keys})
+
+                break if graph.present?
+              end
+            else
+              graph = get_graph_int( data )
             end
 
             if graph.blank?
@@ -202,48 +205,15 @@ module Qonfig
           }
         end
 
-        def get_graph_int( data, options )
+        def get_graph_int( graphs, options = {} )
           if( options[:uuid] )
-            graph = data[options[:uuid]]
-          elsif( options.key?(:row_key) && options.key?(:row_value) && options.key?(:column_key) && options.key?(:column_value) )
-            graph = data.select{|k,g|
-              g.row_key.eql?(options[:row_key]) &&
-              g.row_value.eql?(options[:row_value]) &&
-              g.column_key.eql?(options[:column_key]) &&
-              g.column_value.eql?(options[:column_value])}
-          elsif( options.key?(:row_key) && options.key?(:row_value) && options.key?(:column_key) )
-            graph = data.select{|k,g|
-              g.row_key.eql?(options[:row_key]) &&
-              g.row_value.eql?(options[:row_value]) &&
-              g.column_key.eql?(options[:column_key]) &&
-              g.column_value.blank?
-            }
-          elsif( options.key?(:row_key) && options.key?(:row_value) )
-            graph = data.select{|k,g|
-              g.row_key.eql?(options[:row_key]) &&
-              g.row_value.eql?(options[:row_value]) &&
-              g.column_key.blank? &&
-              g.column_value.blank?
-            }
-          elsif( options.key?(:row_key) )
-            graph = data.select{|k,g|
-              g.row_key.eql?(options[:row_key]) &&
-              g.row_value.blank? &&
-              g.column_key.blank? &&
-              g.column_value.blank?
-            }
+            graph = graphs[options[:uuid]]
           else
-            graph = data.select{|k,g|
-              g.row_key.blank? &&
-              g.row_value.blank? &&
-              g.column_key.blank? &&
-              g.column_value.blank?
-            }
+            graph = graphs.select{|k,g| g.match?(options[:keys]) }
           end
           
           return graph.values.first
         end
-
     end
   end
 end

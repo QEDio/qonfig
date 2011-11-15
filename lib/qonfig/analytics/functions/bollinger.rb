@@ -48,7 +48,7 @@ module Qonfig
             :deviation_factor                   => deviation_factor,
             :deviation_type                     => deviation_type,
             :number_of_values_moving_average    => number_of_values_moving_average
-          }).delete_if{|k,v|v.nil?}
+          }).delete_if{|k,v|v.blank?}
         end
       end
     end

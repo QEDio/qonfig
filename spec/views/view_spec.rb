@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'spec_helper'
+require 'yaml'
 
 describe Qonfig::Views::View do
   include Qonfig::Test::Fixtures::Views::View
@@ -32,7 +33,28 @@ describe Qonfig::Views::View do
       view.name.should                        == VIEWS_VIEW_NAME_1
       view.description.should                 == VIEWS_VIEW_DESCRIPTION_1
       view.order.should                       == VIEWS_VIEW_ORDER_1
-      view.serializable_partials.should       == VIEWS_VIEW_PARTIALS_1
+
+      view.serializable_partials.each_with_index do |partial, i|
+        monitoring_partial = VIEWS_VIEW_PARTIALS_1[i]
+
+        [:default_graphs, :graphs].each do |k|
+          graphs  = partial[k]
+
+          if( graphs.present? )
+            graphs.each_with_index do |graph, i|
+              monitoring_graph = monitoring_partial[k][i]
+
+              graph.should == monitoring_graph
+            end
+          else
+            graphs.eql?(monitoring_partial[k])
+          end
+        end
+
+        partial.should          == monitoring_partial
+      end
+
+      view.serializable_partials.should == VIEWS_VIEW_PARTIALS_1
     end
   end
 end

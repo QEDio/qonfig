@@ -62,7 +62,7 @@ module Qonfig
         }).delete_if{|k,v|v.blank?}
       end
 
-      def serializable_partials
+      def serializable_partials()
         @partials.map{|k,v| v.serializable_hash }
       end
     end
