@@ -74,12 +74,6 @@ module Qonfig
                   {
                     "type"          => "Qonfig::Analytics::Graph",
                     "uuid"          => "default_graph_uuid_1",
-                    "keys"          => {
-                      "row_key"       => nil,
-                      "row_value"     => nil,
-                      "column_key"    => nil,
-                      "column_value"  => ""
-                    },
                     "name"          => "Conversions",
                     "description"   => "For something big",
                     "order"         => ["error_uuid", "warn_uuid"],
