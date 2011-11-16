@@ -89,7 +89,7 @@ module Qonfig
                         "uuid"                            => "error_uuid",
                         "above"                           => "red",
                         "below"                           => "green",
-                        "with_color"                      => false
+                        "with_color"                      => "false"
                       },
                       {
                         "type"                            => "Qonfig::Analytics::Functions::Bollinger",
