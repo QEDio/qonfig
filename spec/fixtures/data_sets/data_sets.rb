@@ -1,0 +1,1 @@
+require 'fixtures/data_sets/formats/base'
