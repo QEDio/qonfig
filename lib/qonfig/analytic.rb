@@ -4,28 +4,28 @@ require 'active_support/core_ext/object/blank'
 
 module Qonfig
   class Analytic
-    attr_accessor :analytics
+    def initialize(ext_params = {})
+      params                  = default_params.merge(ext_params)
 
-    def initialize(ext_options = {})
-      options             = default_options.merge(ext_options)
-
-      raise Exception.new("No user provided!") if options[:user].blank?
-      raise Exception.new("No view provided!") if options[:view].blank?
-      
-      @datasource           = options[:datasource]
-      @analytics            = @datasource.get(  :user         => options[:user],
-                                                :view         => options[:view])
+      raise Exception.new("No user provided!") if params[:user].blank?
+      @user                   = params[:user]
+      @datasource             = params[:datasource]
     end
 
-    def api
-      @api ||= @datasource.get(  :user          => options[:user],
-                                 :api           => "api")
-    end
-
-    def default_options
+    def default_params
       {
         :datasource     => Qonfig::Db.new
       }
+    end
+
+    def view(v)
+      @analytics ||= @datasource.get( :user         => @user,
+                                      :view         => v)
+    end
+
+    def api
+      @api ||= @datasource.get(  :user          => @user,
+                                 :api           => "api")
     end
   end
 end
