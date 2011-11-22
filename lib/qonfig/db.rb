@@ -20,6 +20,11 @@ module Qonfig
       return conf
     end
 
+    def get_api(ext_options = {})
+      options     = {}.merge(ext_options)
+      return Qonfig::Factory.build(conf["api"].symbolize_keys_rec)
+    end
+
     def default_options
       {
         :data => self.class.data
@@ -35,7 +40,14 @@ module Qonfig
     def self.data
       {
         "kp" => {
-          "early_warning" => {
+          "api" => {
+            "type"          => "Qonfig::Api",
+            "pub_priv"      => {
+              "pub_key"     => "",
+              "priv_key"    => ""
+            }
+          },
+          "early_warning"  => {
             "type"         => "Qonfig::Views::View",
             "uuid"         => "views_view_uuid",
             "name"         => "Early Warning",
