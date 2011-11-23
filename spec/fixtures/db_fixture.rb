@@ -2,6 +2,8 @@
 module Qonfig
   module Test
     module Db
+      include Qonfig::Test::Fixtures::Api::PubPriv
+
       CONFIG_DATA = {
         "user" => {
           "view" => {
@@ -242,6 +244,13 @@ module Qonfig
                 ]
               }
             ]
+          },
+          "api" => {
+            "type"          => "Qonfig::Api::Api",
+            "pub_priv"      => {
+              "public_key"     => PUBLIC_KEY,
+              "private_key"    => PRIVATE_KEY
+            }
           }
         }
       }
