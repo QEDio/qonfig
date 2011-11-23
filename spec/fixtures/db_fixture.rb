@@ -2,6 +2,8 @@
 module Qonfig
   module Test
     module Db
+      include Qonfig::Test::Fixtures::Api::PubPriv
+
       CONFIG_DATA = {
         "user" => {
           "view" => {
@@ -18,7 +20,7 @@ module Qonfig
                 "description"   => "Data form Google Adwords to show the way!",
                 "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
                 "data_set"      => {
-                  "format" => [
+                  "formatings" => [
                     {
                       "column"    => {
                         "key"             => "cr",
@@ -30,11 +32,55 @@ module Qonfig
                     },
                     {
                       "column"    => {
+                        "key"             => "cpa",
+                        "key_mapping"     => "CPA",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=1| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "cost",
+                        "key_mapping"     => "Kosten",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=1| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "impressions",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=0| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "clicks",
+                        "key_mapping"     => "Klicks",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=0| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
                         "key"             => "campaign_product",
                         "key_mapping"     => "Produkt",
-                        "value_mappings"  => {"solaranlagen" => "pupsanlagen", "garagen" => "superdings"},
                         "value_functions" => [
                           {"lambda" => 'lambda{|str| str.capitalize}'}
+                        ]
+                      }
+                    }
+                  ],
+                  "sortings" => [
+                    {
+                      "row"     => {
+                        "key"  => "converions",
+                        "functions"    => [
+                          {"lambda" => 'lambda{|n1,n2| n2 <=> n1}'}
                         ]
                       }
                     }
@@ -242,6 +288,13 @@ module Qonfig
                 ]
               }
             ]
+          },
+          "api" => {
+            "type"          => "Qonfig::Api::Api",
+            "pub_priv"      => {
+              "public_key"     => PUBLIC_KEY,
+              "private_key"    => PRIVATE_KEY
+            }
           }
         }
       }

@@ -1,14 +1,14 @@
 module Qonfig
   module DataSets
     class DataSet
-      attr_accessor :data_source, :sortings, :formats
+      attr_accessor :data_source, :sortings, :formatings
 
       def initialize(ext_params = {})
         params          = default_params.merge((ext_params||{}))
 
         @data_source    = set_data_source(params.delete(:data_source))
-        add_sortings(params.delete(:sorting))
-        add_formats(params.delete(:format))
+        add_sortings(params.delete(:sortings))
+        add_formatings(params.delete(:formatings))
       end
 
       def default_params
@@ -17,10 +17,10 @@ module Qonfig
         }
       end
 
-      def get_format( ext_options = {} )
+      def get_formating( ext_options = {} )
         options     = default_get_format_options.merge(ext_options||{})
 
-        fs = formats.select{|f| f.match?( options )}
+        fs = formatings.select{|f| f.match?( options )}
 
         if( options[:return_first] )
           fs = fs.first
@@ -39,7 +39,7 @@ module Qonfig
         @data_source = data_source
       end
 
-      def add_sortings( sorting, ext_options = {} )
+      def add_sortings( sortings, ext_options = {} )
         @sortings ||= []
 
         options = default_add_sortings_options.merge(ext_options||{})
@@ -56,18 +56,18 @@ module Qonfig
         }
       end
 
-      def add_formats( formats, ext_options = {} )
-        @formats ||= []
+      def add_formatings( formatings, ext_options = {} )
+        @formatings ||= []
 
-        options = default_add_formats_options.merge(ext_options||{})
-        formats = [formats] unless Array.try_convert(formats)
+        options = default_add_formatings_options.merge(ext_options||{})
+        formatings = [formatings] unless Array.try_convert(formatings)
 
-        formats.each do |format|
-          add_format(format, options)
+        formatings.each do |formating|
+          add_formating(formating, options)
         end
       end
 
-      def default_add_formats_options
+      def default_add_formatings_options
         {
 
         }
@@ -80,17 +80,17 @@ module Qonfig
 
       end
 
-      def add_format( format, ext_options = {} )
+      def add_formating( format, ext_options = {} )
         options = ext_options || {}
 
-        @formats << Formats::Format.new( format )
+        @formatings << Formatings::Format.new( format )
       end
 
       def serializable_hash
         {
           :data_source        => data_source,
           :sortings           => sortings.map{|s| s.serializable_hash}.delete_if{|k,v|v.blank?},
-          :formats            => formats.map{|f| f.serializable_hash}.delete_if{|k,v|v.blank?}
+          :formatings         => formatings.map{|f| f.serializable_hash}.delete_if{|k,v|v.blank?}
         }.delete_if{|k,v|v.blank?}
       end
     end

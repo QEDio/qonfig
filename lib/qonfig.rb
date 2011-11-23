@@ -7,6 +7,8 @@ require 'qonfig/views/views'
 require 'qonfig/data_sets/data_sets'
 require 'qonfig/adapters/adapters'
 
+require 'qonfig/api'
+
 require 'qonfig/factory'
 
 

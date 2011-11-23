@@ -1,7 +1,7 @@
 module Qonfig
   module DataSets
-    module Formats
-      class Column < Base
+    module Formatings
+      class Row < Base
 
         def initialize(ext_params = {})
           params             = default_params.merge(ext_params||{})

@@ -2,6 +2,7 @@
 module Qonfig
   class Db
     attr_reader :data
+
     def initialize(ext_options = {})
       options   = default_options.merge(ext_options)
       @data     = options[:data]
@@ -11,13 +12,40 @@ module Qonfig
       options = default_get_options.merge(ext_options)
 
       raise Exception.new("No user provided!") if options[:user].blank?
-      conf = data[options[:user]]
 
-      if( conf && options[:view] )
-        conf = Qonfig::Factory.build(conf[options[:view]].symbolize_keys_rec)
+      if( options[:view] )
+        conf = get_by_type( :view, options )
+      elsif( options[:api] )
+        conf = get_by_type( :api, options )
+      else
+        raise Exception.new("No known type found")
+      end
+      
+      return conf
+    end
+
+    def get_by_type( type, ext_options = {} )
+      options     = {}.merge(ext_options)
+
+      ret_val = case type
+          when :view then get_view( options )
+          when :api then get_api( options )
+          else raise Exception.new("Type #{type} is not supported!")
       end
 
-      return conf
+      return ret_val
+    end
+
+    def get_complete_user_config( user )
+      @complete_config ||= data[user]
+    end
+
+    def get_view( options )
+      Qonfig::Factory.build(get_complete_user_config(options[:user])[options[:view]].symbolize_keys_rec)
+    end
+
+    def get_api( options )
+      return Qonfig::Factory.build(get_complete_user_config(options[:user])["api"].symbolize_keys_rec)
     end
 
     def default_options
@@ -35,7 +63,14 @@ module Qonfig
     def self.data
       {
         "kp" => {
-          "early_warning" => {
+          "api" => {
+            "type"          => "Qonfig::Api::Api",
+            "pub_priv"      => {
+              "pub_key"     => "",
+              "priv_key"    => ""
+            }
+          },
+          "early_warning"  => {
             "type"         => "Qonfig::Views::View",
             "uuid"         => "views_view_uuid",
             "name"         => "Early Warning",
@@ -49,7 +84,7 @@ module Qonfig
                 "description"   => "Data form Google Adwords to show the way!",
                 "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
                 "data_set"      => {
-                  "format" => [
+                  "formatings" => [
                     {
                       "column"    => {
                         "key"             => "cr",
@@ -61,10 +96,55 @@ module Qonfig
                     },
                     {
                       "column"    => {
+                        "key"             => "cpa",
+                        "key_mapping"     => "CPA",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=1| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "cost",
+                        "key_mapping"     => "Kosten",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=1| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "impressions",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=0| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
+                        "key"             => "clicks",
+                        "key_mapping"     => "Klicks",
+                        "value_functions" => [
+                          {"lambda" => 'lambda {|number, precision=0| Qed::Format::Helpers.new.number_with_precision(number, :precision => precision, :delimiter => I18n.t(:"number.format.delimiter"))}'}
+                        ]
+                      }
+                    },
+                    {
+                      "column"    => {
                         "key"             => "campaign_product",
                         "key_mapping"     => "Produkt",
                         "value_functions" => [
                           {"lambda" => 'lambda{|str| str.capitalize}'}
+                        ]
+                      }
+                    }
+                  ],
+                  "sortings" => [
+                    {
+                      "row"     => {
+                        "key"  => "conversions",
+                        "functions"    => [
+                          {"lambda" => 'lambda{|n1,n2| n2 <=> n1}'}
                         ]
                       }
                     }
