@@ -17,7 +17,7 @@ module Qonfig
         }
       end
 
-      def get_format( ext_options = {} )
+      def get_formating( ext_options = {} )
         options     = default_get_format_options.merge(ext_options||{})
 
         fs = formatings.select{|f| f.match?( options )}
