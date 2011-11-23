@@ -2,7 +2,7 @@ module Qonfig
   module Test
     module Fixtures
       module DataSets
-        module Formats
+        module Formatings
           module Base
             FORMATS_BASE_KEY                  = "formats_base_key"
             FORMATS_BASE_VALUE                = "formats_base_value"

@@ -1,6 +1,6 @@
 module Qonfig
   module DataSets
-    module Formats
+    module Formatings
       class Format
         attr_accessor :row, :column
 
@@ -57,6 +57,14 @@ module Qonfig
             :row        => row.serializable_hash,
             :column     => column.serializable_hash
           }.delete_if{|k,v|v.blank?}
+        end
+
+        def present?
+          row.present? || column.present?
+        end
+
+        def blank?
+          !present?
         end
       end
     end

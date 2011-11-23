@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Qonfig::DataSets::Formats::Base do
-  include Qonfig::Test::Fixtures::DataSets::Formats::Base
+describe Qonfig::DataSets::Formatings::Base do
+  include Qonfig::Test::Fixtures::DataSets::Formatings::Base
 
   describe "Base" do
     context "when bulding with no supplied parameters" do
       let(:base) do
-        Qonfig::DataSets::Formats::Base.new()
+        Qonfig::DataSets::Formatings::Base.new()
       end
 
       it "lets you set its attributes and de/serializes correctly" do
@@ -24,7 +24,7 @@ describe Qonfig::DataSets::Formats::Base do
         base.value_mappings.should        == FORMATS_BASE_VALUE_MAPPINGS
         base.value_functions.should       == FORMATS_BASE_VALUE_FUNCTIONS
 
-        base.should                       == Qonfig::DataSets::Formats::Base.new(base.serializable_hash)
+        base.should                       == Qonfig::DataSets::Formatings::Base.new(base.serializable_hash)
       end
     end
   end

@@ -1,5 +1,5 @@
 require 'qonfig/data_sets/base'
 require 'qonfig/data_sets/data_set'
 require 'qonfig/data_sets/data_source'
-require 'qonfig/data_sets/formats/formats'
+require 'qonfig/data_sets/formatings/formatings'
 require 'qonfig/data_sets/sortings/sortings'

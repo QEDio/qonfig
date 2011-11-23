@@ -1,6 +1,6 @@
 module Qonfig
   module DataSets
-    module Formats
+    module Formatings
       class Base
         attr_accessor :key, :value
         attr_accessor :key_mapping, :key_functions
@@ -46,6 +46,11 @@ module Qonfig
 
         def ==(other)
           eql?(other)
+        end
+
+        def present?
+          key.present? || value.present? || key_mapping.present? ||
+          key_functions.present? || value_mappings.present? || value_functions.present?
         end
       end
     end
