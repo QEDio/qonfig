@@ -20,7 +20,7 @@ module Qonfig
       def get_format( ext_options = {} )
         options     = default_get_format_options.merge(ext_options||{})
 
-        fs = formats.select{|f| f.match?( options )}
+        fs = formatings.select{|f| f.match?( options )}
 
         if( options[:return_first] )
           fs = fs.first
@@ -59,7 +59,7 @@ module Qonfig
       def add_formatings( formatings, ext_options = {} )
         @formatings ||= []
 
-        options = default_add_formats_options.merge(ext_options||{})
+        options = default_add_formatings_options.merge(ext_options||{})
         formatings = [formatings] unless Array.try_convert(formatings)
 
         formatings.each do |formating|
@@ -67,7 +67,7 @@ module Qonfig
         end
       end
 
-      def default_add_formats_options
+      def default_add_formatings_options
         {
 
         }
