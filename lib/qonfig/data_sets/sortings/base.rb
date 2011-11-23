@@ -38,6 +38,14 @@ module Qonfig
         def ==(other)
           eql?(other)
         end
+
+        def present?
+          key.present? || functions.present?
+        end
+
+        def blank?
+          !present?
+        end
       end
     end
   end

@@ -20,7 +20,7 @@ module Qonfig
                 "description"   => "Data form Google Adwords to show the way!",
                 "order"         => ["graph_uuid_1", "graph_uuid_2", "graph_uuid_3", "graph_uuid_4", "graph_uuid_5", "graph_uuid_6"],
                 "data_set"      => {
-                  "format" => [
+                  "formatings" => [
                     {
                       "column"    => {
                         "key"             => "cr",
@@ -37,6 +37,16 @@ module Qonfig
                         "value_mappings"  => {"solaranlagen" => "pupsanlagen", "garagen" => "superdings"},
                         "value_functions" => [
                           {"lambda" => 'lambda{|str| str.capitalize}'}
+                        ]
+                      }
+                    }
+                  ],
+                  "sortings" => [
+                    {
+                      "row"     => {
+                        "key"  => "converions",
+                        "functions"    => [
+                          {"lambda" => 'lambda{|n1,n2| n2 <=> n1}'}
                         ]
                       }
                     }

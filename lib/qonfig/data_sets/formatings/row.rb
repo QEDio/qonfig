@@ -1,6 +1,6 @@
 module Qonfig
   module DataSets
-    module Formats
+    module Formatings
       class Row < Base
 
         def initialize(ext_params = {})

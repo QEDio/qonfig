@@ -33,6 +33,14 @@ module Qonfig
             :row            => (row.present? ? row.serializable_hash : {})
           }.delete_if{|k,v|v.blank?}
         end
+
+        def present?
+          row.present?
+        end
+
+        def blank?
+          !present?
+        end
       end
     end
   end
