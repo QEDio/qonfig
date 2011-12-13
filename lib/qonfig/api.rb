@@ -7,14 +7,13 @@ module Qonfig
       attr_reader :pub_priv, :database
       
       def initialize( ext_params = {} )
-        params              = default_params.merge(ext_params)
+        params              = default_params.merge(ext_params.delete_if{|k,v|v.nil?})
         self.pub_priv       = params[:pub_priv]
         self.database       = params[:database]
       end
 
       def default_params
         {
-
         }
       end
 

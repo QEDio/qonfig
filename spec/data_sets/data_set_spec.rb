@@ -10,7 +10,7 @@ describe Qonfig::DataSets::DataSet do
     end
 
     it "should be created correctly" do
-      dataset.formatings.size.should   == 2
+      dataset.formatings.size.should   == 6
       dataset.sortings.size.should     == 1
 
       dataset.formatings.each do |formating|

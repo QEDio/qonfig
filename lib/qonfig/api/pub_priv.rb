@@ -4,7 +4,7 @@ module Qonfig
       attr_accessor :public_key, :private_key
       
       def initialize( ext_params = {} )
-        params        = default_params.merge(ext_params)
+        params           = default_params.merge((ext_params||{}).delete_if{|k,v|v.nil?})
 
         @public_key      = params[:public_key]
         @private_key     = params[:private_key]

@@ -41,11 +41,27 @@ module Qonfig
     end
 
     def get_view( options )
-      Qonfig::Factory.build(get_complete_user_config(options[:user])[options[:view]].symbolize_keys_rec)
+      view = Qonfig::Views::View.new
+
+      if( get_complete_user_config(options[:user]).present? )
+        if( get_complete_user_config(options[:user])[options[:view]].present? )
+          view = Qonfig::Factory.build(get_complete_user_config(options[:user])[options[:view]].symbolize_keys_rec)
+        end
+      end
+
+      return view
     end
 
     def get_api( options )
-      return Qonfig::Factory.build(get_complete_user_config(options[:user])["api"].symbolize_keys_rec)
+      api = Qonfig::Api::Api.new
+
+      if( get_complete_user_config(options[:user]).present? )
+        if( get_complete_user_config(options[:user])["api"].present? )
+          api = Qonfig::Factory.build(get_complete_user_config(options[:user])["api"].symbolize_keys_rec)
+        end
+      end
+
+      return api
     end
 
     def default_options

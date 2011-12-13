@@ -4,7 +4,7 @@ module Qonfig
       attr_accessor :data_source, :sortings, :formatings
 
       def initialize(ext_params = {})
-        params          = default_params.merge((ext_params||{}))
+        params          = default_params.merge((ext_params||{}).delete_if{|k,v|v.nil?})
 
         @data_source    = set_data_source(params.delete(:data_source))
         add_sortings(params.delete(:sortings))
