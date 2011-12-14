@@ -86,6 +86,36 @@ module Qonfig
               "priv_key"    => ""
             }
           },
+          "adwords_db"     => {
+            "type"         => "Qonfig::Views::View",
+            "uuid"         => "views_view_uuid",
+            "name"         => "Adwords DB",
+            "description"  => "AdwordsDB for the masses",
+            "order"        => ["views_partial_uuid_1"],
+            "partials"     => [
+              {
+                "type"          => "Qonfig::Views::Partial",
+                "uuid"          => "views_partial_uuid_1",
+                "name"          => "Adwords",
+                "description"   => "Data form Google Adwords to show the way!",
+                "order"         => [],
+                "data_set"      => {
+                  "formatings" => [
+                  ],
+                  "sortings" => [
+                    {
+                      "row"     => {
+                        "key"  => "cost",
+                        "functions"    => [
+                          {"lambda" => 'lambda{|n1,n2| n2 <=> n1}'}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
           "early_warning"  => {
             "type"         => "Qonfig::Views::View",
             "uuid"         => "views_view_uuid",
